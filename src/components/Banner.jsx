@@ -1,4 +1,4 @@
-import image from "../assets/living-room.jpg";
+import image from "/public/living-room.jpg";
 
 function Banner() {
   return (
