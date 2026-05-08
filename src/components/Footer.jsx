@@ -44,7 +44,12 @@ function Footer() {
       </div>
       <hr className="w-full h-1 border-zinc-400" />
       <div className="flex justify-start items-start w-120">
-        <p>Copyright © 2026 Furino - All rights reserved</p>
+        <p>
+          Copyright © <span>{new Date().getFullYear()}</span> Furino All Rights
+          Reserved | Made with
+          <span className="text-red-500"> ❤ </span> by{" "}
+          <a href="https://github.com/pharo-pharo">Pharo</a>
+        </p>
       </div>
     </footer>
   );
