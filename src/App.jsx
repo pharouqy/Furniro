@@ -1,5 +1,6 @@
 import RouteIndex from "./router/Routes";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 import { BrowserRouter } from "react-router-dom";
 
@@ -9,6 +10,7 @@ const App = () => {
       <BrowserRouter>
         <Header />
         <RouteIndex />
+        <Footer />
       </BrowserRouter>
     </div>
   );

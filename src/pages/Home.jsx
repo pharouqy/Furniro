@@ -1,3 +1,5 @@
+
+
 import Banner from "../components/Banner";
 import ContentHome from "../components/ContentHome";
 import ProductCard from "../components/ProductCard";
@@ -30,80 +32,83 @@ import GridSection from "../components/GridSection";
 
 function Home() {
   return (
-    <main className="home flex flex-col gap-10 justify-center items-center">
-      <Banner />
-      <div className="home__content flex flex-col gap-4 justify-center items-center w-120">
-        <h2 className="text-2xl font-bold">Brows The Range</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-        <div className="grid grid-cols-3 gap-4">
-          <ContentHome living={living} text="Living Room" />
-          <ContentHome living={bedroom} text="Bedroom" />
-          <ContentHome living={dining} text="Dining Room" />
-        </div>
-      </div>
-      <div className="product__section flex flex-col gap-4 justify-center items-center">
-        <h2 className="text-2xl font-bold">Our Products</h2>
-        <div className="our_products grid grid-cols-4 gap-4 justify-center items-center w-120">
-          {[couch, couch, couch, couch, couch, couch, couch, couch].map(
-            (item) => (
-              <ProductCard
-                image={item}
-                title="Couch"
-                price="1000$"
-                discount="10%"
-                description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
-                feature="10%"
-              />
-            ),
-          )}
-        </div>
-      </div>
-      <div className="loading flex justify-center items-center gap-4 bg-amber-100 w-120 h-55">
-        <div className="presentation w-33">
-          <h2 className="font-bold text-2xl mb-4">
-            Lorem ipsum dolor sit amet consectetur.
-          </h2>
-          <p className="text-sm">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-            mollitia in sit fugit maiores!
-          </p>
-          <button className="bg-amber-500 text-white px-4 py-2 my-5 font-bold cursor-pointer">
-            Learn More
-          </button>
-        </div>
-        <div className="presentation-title w-33 h-50 relative">
-          <img
-            src={frameworks}
-            alt="frameworks"
-            className="absolute left-0 top-0"
-          />
-          <div className="absolute bottom-2 left-2 w-25 flex justify-center items-end">
-            <h3 className="bg-white/75 p-2 font-bold">
-              <span className="text-sm font-light">01 --- Red Rooms</span>
-              <br />
-              Lorem ipsum dolor sit amet.
-            </h3>
-            <button className="bg-amber-500 text-white px-2 py-2 font-bold cursor-pointer">
-              <FontAwesomeIcon icon={faArrowRightLong} />
-            </button>
+    <>
+      <main className="home flex flex-col gap-10 justify-center items-center border-b-2 border-zinc-200">
+        <Banner />
+        <div className="home__content flex flex-col gap-4 justify-center items-center w-120">
+          <h2 className="text-2xl font-bold">Brows The Range</h2>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          <div className="grid grid-cols-3 gap-4">
+            <ContentHome living={living} text="Living Room" />
+            <ContentHome living={bedroom} text="Bedroom" />
+            <ContentHome living={dining} text="Dining Room" />
           </div>
         </div>
-        <Slider objt={[room1, room2, room3, room4]} />
-      </div>
-      <div className="loading flex flex-col justify-center items-center bg-white w-120">
-        <p className="text-sm">Share you setup with</p>
-        <h2 className="text-2xl font-bold">#ForniroFourniture</h2>
-        <GridSection
-          house1={house1}
-          house2={house2}
-          house3={house3}
-          house4={house4}
-          house5={house5}
-          house6={house6}
-          house7={house7}
-        />
-      </div>
-    </main>
+        <div className="product__section flex flex-col gap-4 justify-center items-center">
+          <h2 className="text-2xl font-bold">Our Products</h2>
+          <div className="our_products grid grid-cols-4 gap-4 justify-center items-center w-120">
+            {[couch, couch, couch, couch, couch, couch, couch, couch].map(
+              (item) => (
+                <ProductCard
+                  key={item}
+                  image={item}
+                  title="Couch"
+                  price="1000$"
+                  discount="10%"
+                  description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+                  feature="10%"
+                />
+              ),
+            )}
+          </div>
+        </div>
+        <div className="loading flex justify-center items-center gap-4 bg-amber-100 w-120 h-55">
+          <div className="presentation w-33">
+            <h2 className="font-bold text-2xl mb-4">
+              Lorem ipsum dolor sit amet consectetur.
+            </h2>
+            <p className="text-sm">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
+              mollitia in sit fugit maiores!
+            </p>
+            <button className="bg-amber-500 text-white px-4 py-2 my-5 font-bold cursor-pointer">
+              Learn More
+            </button>
+          </div>
+          <div className="presentation-title w-33 h-50 relative">
+            <img
+              src={frameworks}
+              alt="frameworks"
+              className="absolute left-0 top-0"
+            />
+            <div className="absolute bottom-2 left-2 w-25 flex justify-center items-end">
+              <h3 className="bg-white/75 p-2 font-bold">
+                <span className="text-sm font-light">01 --- Red Rooms</span>
+                <br />
+                Lorem ipsum dolor sit amet.
+              </h3>
+              <button className="bg-amber-500 text-white px-2 py-2 font-bold cursor-pointer">
+                <FontAwesomeIcon icon={faArrowRightLong} />
+              </button>
+            </div>
+          </div>
+          <Slider objt={[room1, room2, room3, room4]} />
+        </div>
+        <div className="loading flex flex-col justify-center items-center bg-white w-120 my-5">
+          <p className="text-sm">Share you setup with</p>
+          <h2 className="text-2xl font-bold">#ForniroFourniture</h2>
+          <GridSection
+            house1={house1}
+            house2={house2}
+            house3={house3}
+            house4={house4}
+            house5={house5}
+            house6={house6}
+            house7={house7}
+          />
+        </div>
+      </main>
+    </>
   );
 }
 

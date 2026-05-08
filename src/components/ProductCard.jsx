@@ -5,7 +5,7 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 function ProductCard({ image, title, price, discount, description, feature }) {
   return (
-    <article className="relative flex flex-col justify-items-start items-flex-start w-full h-45 group">
+    <article className="relative rounded-4xl flex flex-col justify-items-start items-flex-start w-full h-45 group">
       <span
         className={
           feature
@@ -15,8 +15,12 @@ function ProductCard({ image, title, price, discount, description, feature }) {
       >
         {feature ? feature : "New"}
       </span>
-      <img src={image} alt="couch" className="w-full h-full object-cover" />
-      <div className="bg-mist-200 px-2 py-1">
+      <img
+        src={image}
+        alt="couch"
+        className="w-full h-full object-cover rounded-t-2xl"
+      />
+      <div className="bg-mist-200 px-2 py-1 rounded-b-2xl">
         <h3 className="font-bold">{title}</h3>
         <p>{description}</p>
         <p className="flex gap-5 text-sm font-bold">
@@ -24,7 +28,7 @@ function ProductCard({ image, title, price, discount, description, feature }) {
           <span className="line-through text-zinc-400">{discount}</span>
         </p>
       </div>
-      <div className="overlay hidden group-hover:flex flex-col justify-center items-center absolute top-0 left-0 w-full h-full bg-black/50 transition-all duration-500">
+      <div className="overlay hidden rounded-2xl group-hover:flex flex-col justify-center items-center absolute top-0 left-0 w-full h-full bg-black/50 transition-all duration-500">
         <button className="btn-cart cursor-pointer px-6 py-2 bg-white text-amber-700 font-bold">
           Buy Now
         </button>
