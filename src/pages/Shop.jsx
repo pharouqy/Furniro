@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import BannerShop from "../components/BannerShop";
 
+import shopBanner from "/public/shop_banner.webp";
+
 import couch from "/public/couch.jpg";
 
 import ProductCard from "../components/ProductCard";
@@ -50,7 +52,7 @@ function Shop() {
   return (
     <main className="flex flex-col items-center justify-center w-full">
       {/* Banner */}
-      <BannerShop />
+      <BannerShop shopBanner={shopBanner} />
 
       {/* Toolbar */}
       <ToolBare
@@ -85,7 +87,6 @@ function Shop() {
 
       {/* Infos */}
       <Infos />
-
     </main>
   );
 }
