@@ -1,5 +1,3 @@
-
-
 import Banner from "../components/Banner";
 import ContentHome from "../components/ContentHome";
 import ProductCard from "../components/ProductCard";
@@ -47,19 +45,23 @@ function Home() {
         <div className="product__section flex flex-col gap-4 justify-center items-center">
           <h2 className="text-2xl font-bold">Our Products</h2>
           <div className="our_products grid grid-cols-4 gap-4 justify-center items-center w-120">
-            {[couch, couch, couch, couch, couch, couch, couch, couch].map(
-              (item) => (
+            {Array.from({ length: 16 }, (_, index) => ({
+              id: index + 1,
+              title: `Couch ${index + 1}`,
+            }))
+              .fill(couch)
+              .map((item, index) => (
                 <ProductCard
-                  key={item}
+                  key={index}
                   image={item}
-                  title="Couch"
+                  title={`Couch ${index + 1}`}
                   price="1000$"
                   discount="10%"
                   description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
                   feature="10%"
+                  id={index + 1}
                 />
-              ),
-            )}
+              ))}
           </div>
         </div>
         <div className="loading flex justify-center items-center gap-4 bg-amber-100 w-120 h-55">

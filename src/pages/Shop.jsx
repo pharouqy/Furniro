@@ -74,6 +74,7 @@ function Shop() {
             discount="$79"
             description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
             feature="New"
+            id={product.id}
           />
         ))}
       </div>

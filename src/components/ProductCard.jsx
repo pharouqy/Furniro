@@ -3,7 +3,17 @@ import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
 import { faCodeCompare } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
-function ProductCard({ image, title, price, discount, description, feature }) {
+import { Link } from "react-router-dom";
+
+function ProductCard({
+  image,
+  title,
+  price,
+  discount,
+  description,
+  feature,
+  id,
+}) {
   return (
     <article className="relative rounded-4xl flex flex-col justify-items-start items-flex-start w-full h-45 group">
       <span
@@ -29,9 +39,11 @@ function ProductCard({ image, title, price, discount, description, feature }) {
         </p>
       </div>
       <div className="overlay hidden rounded-2xl group-hover:flex flex-col justify-center items-center absolute top-0 left-0 w-full h-full bg-black/50 transition-all duration-500">
-        <button className="btn-cart cursor-pointer px-6 py-2 bg-white text-amber-700 font-bold">
-          Buy Now
-        </button>
+        <Link to={`/product/${id}`}>
+          <button className="btn-cart cursor-pointer px-6 py-2 bg-white text-amber-700 font-bold">
+            Buy Now
+          </button>
+        </Link>
         <div className="flex gap-2 text-amber-50 my-5">
           <button className="cursor-pointer">
             <FontAwesomeIcon icon={faShareNodes} />
