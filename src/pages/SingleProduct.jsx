@@ -1,94 +1,32 @@
-import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
 import {
   faSquareFacebook,
   faSquareLinkedin,
   faSquareXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 
-import couchSlider1 from "/public/couch-slider1.jpg";
-import couchSlider2 from "/public/couch-slider2.jpg";
-import couchSlider3 from "/public/couch-slider3.jpg";
-import couchSlider4 from "/public/couch-slider4.jpg";
+import BannerProduct from "../components/BannerProduct";
+import SliderProduct from "../components/SliderProduct";
+import Stars from "../components/Stars";
 
 function SingleProduct() {
-  const { id } = useParams();
-  const [selectedImage, setSelectedImage] = useState(couchSlider1);
-
-  const [rating, setRating] = useState(0);
-  const [hover, setHover] = useState(0);
-
-  const handleSlider = (e) => {
-    const slider = e.target.src;
-    setSelectedImage(slider);
-  };
+  const [selectedSize, setSelectedSize] = useState("");
+  const [selectedColor, setSelectedColor] = useState("");
+  const [quantity, setQuantity] = useState(1);
 
   return (
-    <div className="single_product">
-      <div className="bg-amber-100 py-7 px-5 flex flex-row gap-1 justify-start items-center">
-        <Link to="/" className="font-bold">
-          Home
-        </Link>{" "}
-        \{" "}
-        <Link to="/shop" className="font-bold">
-          Shop
-        </Link>{" "}
-        | Product {id}
-      </div>
-      <div className="flex flex-row gap-5 justify-center items-center">
-        <div>
-          <div>
-            <img
-              src={couchSlider1}
-              alt="Couch Slider 1"
-              onClick={handleSlider}
-            />
-            <img
-              src={couchSlider2}
-              alt="Couch Slider 2"
-              onClick={handleSlider}
-            />
-            <img
-              src={couchSlider3}
-              alt="Couch Slider 3"
-              onClick={handleSlider}
-            />
-            <img
-              src={couchSlider4}
-              alt="Couch Slider 4"
-              onClick={handleSlider}
-            />
-          </div>
-          <div>
-            <img src={selectedImage} alt="" />
-          </div>
-        </div>
+    <div className="single_product flex flex-col gap-5 justify-start items-center">
+      <BannerProduct />
+      <div className="flex flex-row gap-5 justify-center items-start w-120">
+        <SliderProduct />
         <div className="flex flex-col gap-2 justify-start items-start">
-          <h2 className="font-bold text-2xl mb-4">
-            Lorem ipsum dolor sit amet.
-          </h2>
-          <span>2 500 Da</span>
+          <h2 className="font-bold text-5xl">ASGARD SOFA</h2>
+          <span className="text-3xl text-gray-300 ">250 000.00 Da</span>
           <div className="flex flex-row gap-2 justify-start items-center">
             <div>
-              <div className="flex flex-row gap-1">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <FontAwesomeIcon
-                    key={star}
-                    icon={faStar}
-                    onClick={() => setRating(star)}
-                    onMouseEnter={() => setHover(star)}
-                    onMouseLeave={() => setHover(0)}
-                    className={`cursor-pointer text-xl transition-colors duration-200 ${
-                      star <= (hover || rating)
-                        ? "text-amber-500"
-                        : "text-gray-300"
-                    }`}
-                  />
-                ))}
-              </div>
+              <Stars />
             </div>
             <div>
               <p>| 5 customers review</p>
@@ -102,50 +40,152 @@ function SingleProduct() {
           </p>
           <div>
             <h3>Size</h3>
-            <div>
-              <button>L</button>
-              <button>XL</button>
-              <button>XS</button>
+            <div className="flex flex-row gap-2">
+              <button
+                onClick={() => setSelectedSize("S")}
+                className={`w-5 h-5 flex items-center justify-center border border-gray-300 rounded-lg ${
+                  selectedSize === "S"
+                    ? "bg-amber-500 text-amber-50"
+                    : "bg-amber-100 hover:bg-amber-500 hover:text-amber-50"
+                }`}
+              >
+                S
+              </button>
+              <button
+                onClick={() => setSelectedSize("M")}
+                className={`w-5 h-5 flex items-center justify-center border border-gray-300 rounded-lg ${
+                  selectedSize === "M"
+                    ? "bg-amber-500 text-amber-50"
+                    : "bg-amber-100 hover:bg-amber-500 hover:text-amber-50"
+                }`}
+              >
+                M
+              </button>
+              <button
+                onClick={() => setSelectedSize("L")}
+                className={`w-5 h-5 flex items-center justify-center border border-gray-300 rounded-lg ${
+                  selectedSize === "L"
+                    ? "bg-amber-500 text-amber-50"
+                    : "bg-amber-100 hover:bg-amber-500 hover:text-amber-50"
+                }`}
+              >
+                L
+              </button>
+              <button
+                onClick={() => setSelectedSize("XL")}
+                className={`w-5 h-5 flex items-center justify-center border border-gray-300 rounded-lg ${
+                  selectedSize === "XL"
+                    ? "bg-amber-500 text-amber-50"
+                    : "bg-amber-100 hover:bg-amber-500 hover:text-amber-50"
+                }`}
+              >
+                XL
+              </button>
+              <button
+                onClick={() => setSelectedSize("XS")}
+                className={`w-5 h-5 flex items-center justify-center border border-gray-300 rounded-lg ${
+                  selectedSize === "XS"
+                    ? "bg-amber-500 text-amber-50"
+                    : "bg-amber-100 hover:bg-amber-500 hover:text-amber-50"
+                }`}
+              >
+                XS
+              </button>
             </div>
           </div>
           <div>
             <h3>Color</h3>
-            <div>
-              <button className="w-5 h-5 rounded-full bg-red-500"></button>
-              <button className="w-5 h-5 rounded-full bg-green-500"></button>
-              <button className="w-5 h-5 rounded-full bg-blue-500"></button>
+            <div className="flex flex-row gap-2">
+              <button
+                onClick={() => setSelectedColor("red")}
+                className={`w-2 h-2 rounded-full ${
+                  selectedColor === "red" ? "bg-red-800" : "bg-red-500"
+                }`}
+              ></button>
+              <button
+                onClick={() => setSelectedColor("green")}
+                className={`w-2 h-2 rounded-full ${
+                  selectedColor === "green" ? "bg-green-800" : "bg-green-500"
+                }`}
+              ></button>
+              <button
+                onClick={() => setSelectedColor("blue")}
+                className={`w-2 h-2 rounded-full ${
+                  selectedColor === "blue" ? "bg-blue-800" : "bg-blue-500"
+                }`}
+              ></button>
             </div>
           </div>
-          <div>
-            <div>
-              <button>-</button>
-              <input type="text" />
-              <button>+</button>
+          <div className="flex flex-row gap-1 justify-start items-center">
+            <div className="flex flex-row justify-center items-center border h-8 rounded-2xl">
+              <button
+                className="text-zinc-950 text-3xl mx-2 cursor-pointer"
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+              >
+                -
+              </button>
+              <input
+                type="text"
+                className="w-5 text-center text-3xl"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+              />
+              <button
+                className="text-zinc-950 text-3xl mx-2 cursor-pointer"
+                onClick={() => setQuantity(quantity + 1)}
+              >
+                +
+              </button>
             </div>
-            <button>Add to cart</button>
-            <button>+ Compare</button>
+            <button className="border text-zinc-950 text-xl rounded-2xl px-1 py-2 cursor-pointer">
+              Add to cart
+            </button>
+            <button className="border text-zinc-950 text-xl rounded-2xl px-1 py-2 cursor-pointer">
+              + Compare
+            </button>
           </div>
-          <hr />
-          <div>
+          <hr className="w-full border-gray-300" />
+          <div className="flex flex-row gap-5 justify-start items-start">
             <ul>
               <li>
-                <p>SKU : 123456789</p>
+                <p>SKU</p>
               </li>
               <li>
-                <p>Category : Sofas</p>
+                <p>Category</p>
               </li>
               <li>
-                <p>Tags : Sofa, Chair, Home, Shop</p>
+                <p>Tags</p>
               </li>
               <li>
-                <p>
-                  Share :{" "}
-                  <div>
-                    <FontAwesomeIcon icon={faSquareFacebook} />
-                    <FontAwesomeIcon icon={faSquareLinkedin} />
-                    <FontAwesomeIcon icon={faSquareXTwitter} />
-                  </div>
-                </p>
+                <p>Share</p>
+              </li>
+            </ul>
+            <ul>
+              <li>
+                <p>: 123456789</p>
+              </li>
+              <li>
+                <p>: Sofas</p>
+              </li>
+              <li>
+                <p>: Sofa, Chair, Home, Shop</p>
+              </li>
+              <li className="flex">
+                :
+                <div>
+                  <FontAwesomeIcon
+                    icon={faSquareFacebook}
+                    className="text-2xl rounded-2xl cursor-pointer"
+                  />
+                  <FontAwesomeIcon
+                    icon={faSquareLinkedin}
+                    className="text-2xl rounded-2xl cursor-pointer"
+                  />
+                  <FontAwesomeIcon
+                    icon={faSquareXTwitter}
+                    className="text-2xl rounded-2xl cursor-pointer"
+                  />
+                </div>
               </li>
             </ul>
           </div>
