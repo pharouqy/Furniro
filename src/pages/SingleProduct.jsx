@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,10 +11,17 @@ import BannerProduct from "../components/BannerProduct";
 import SliderProduct from "../components/SliderProduct";
 import Stars from "../components/Stars";
 
+import Context from "../hooks/Context";
+
 function SingleProduct() {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
-  const [quantity, setQuantity] = useState(1);
+  const [cart, setCart] = useState(0);
+  const { setQuantity } = useContext(Context);
+
+  const addToCart = () => {
+    setQuantity(cart);
+  };
 
   return (
     <div className="single_product flex flex-col gap-5 justify-start items-center">
@@ -120,27 +127,30 @@ function SingleProduct() {
             <div className="flex flex-row justify-center items-center border h-8 rounded-2xl">
               <button
                 className="text-zinc-950 text-3xl mx-2 cursor-pointer"
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                onClick={() => setCart(Math.max(0, cart - 1))}
               >
                 -
               </button>
               <input
                 type="text"
                 className="w-5 text-center text-3xl"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
+                value={cart}
+                onChange={(e) => setCart(Number(e.target.value))}
               />
               <button
                 className="text-zinc-950 text-3xl mx-2 cursor-pointer"
-                onClick={() => setQuantity(quantity + 1)}
+                onClick={() => setCart(cart + 1)}
               >
                 +
               </button>
             </div>
-            <button className="border text-zinc-950 text-xl rounded-2xl px-1 py-2 cursor-pointer">
+            <button
+              className="border text-zinc-950 text-xl rounded-2xl px-1 py-2 cursor-pointer hover:bg-amber-500 hover:text-amber-50 transition-all duration-300 ease-in-out"
+              onClick={addToCart}
+            >
               Add to cart
             </button>
-            <button className="border text-zinc-950 text-xl rounded-2xl px-1 py-2 cursor-pointer">
+            <button className="border text-zinc-950 text-xl rounded-2xl px-1 py-2 cursor-pointer hover:bg-amber-500 hover:text-amber-50 transition-all duration-300 ease-in-out">
               + Compare
             </button>
           </div>

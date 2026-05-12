@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
@@ -7,7 +9,10 @@ import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 import logo from "/public/logo.svg";
 
+import Context from "../hooks/Context";
+
 function Header() {
+  const { quantity } = useContext(Context);
   return (
     <div className="header flex justify-between items-center py-6 px-6">
       <div className="header__logo flex gap-2">
@@ -41,7 +46,10 @@ function Header() {
           <li>
             <FontAwesomeIcon icon={faHeart} />
           </li>
-          <li>
+          <li className="relative">
+            <span className="bg-red-500 text-white rounded-2xl px-1 absolute bottom-1.5 left-1.5">
+              {quantity}
+            </span>
             <FontAwesomeIcon icon={faCartShopping} />
           </li>
         </ul>
