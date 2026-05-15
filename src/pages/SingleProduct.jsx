@@ -7,11 +7,18 @@ import {
   faSquareXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 
+import couchProduct1 from "../../public/couchProduct1.jpg";
+import couchProduct2 from "../../public/couchProduct2.jpg";
+
+import couch from "../../public/couch.jpg";
+
 import BannerProduct from "../components/BannerProduct";
 import SliderProduct from "../components/SliderProduct";
 import Stars from "../components/Stars";
 
 import Context from "../hooks/Context";
+
+import ProductCard from "../components/ProductCard";
 
 function SingleProduct() {
   const [selectedSize, setSelectedSize] = useState("");
@@ -21,6 +28,29 @@ function SingleProduct() {
 
   const addToCart = () => {
     setQuantity(cart);
+  };
+
+  const [showDescription, setShowDescription] = useState(true);
+  const [showAditionnalInformation, setShowAditionnalInformation] =
+    useState(false);
+  const [showReviews, setShowReviews] = useState(false);
+
+  const switchToReviews = () => {
+    setShowDescription(false);
+    setShowAditionnalInformation(false);
+    setShowReviews(true);
+  };
+
+  const switchToDescription = () => {
+    setShowDescription(true);
+    setShowAditionnalInformation(false);
+    setShowReviews(false);
+  };
+
+  const switchToAditionnalInformation = () => {
+    setShowDescription(false);
+    setShowAditionnalInformation(true);
+    setShowReviews(false);
   };
 
   return (
@@ -199,6 +229,159 @@ function SingleProduct() {
               </li>
             </ul>
           </div>
+        </div>
+      </div>
+      <hr className="w-full border-gray-300" />
+      <div className="flex flex-col gap-5 justify-start items-start w-full">
+        <div className="flex flex-row gap-5 justify-center items-center w-full">
+          <ul className="flex flex-row gap-5 justify-center items-center w-full text-2xl">
+            <li>
+              {showDescription ? (
+                <button
+                  className="text-gray-800 underline"
+                  onClick={switchToDescription}
+                >
+                  Description
+                </button>
+              ) : (
+                <button className="text-gray-400" onClick={switchToDescription}>
+                  Description
+                </button>
+              )}
+            </li>
+            <li>
+              {showAditionnalInformation ? (
+                <button
+                  className="text-gray-800 underline"
+                  onClick={switchToAditionnalInformation}
+                >
+                  Aditionnal information
+                </button>
+              ) : (
+                <button
+                  className="text-gray-400"
+                  onClick={switchToAditionnalInformation}
+                >
+                  Aditionnal information
+                </button>
+              )}
+            </li>
+            <li>
+              {showReviews ? (
+                <button
+                  className="text-gray-800 underline"
+                  onClick={switchToReviews}
+                >
+                  Reviews (5)
+                </button>
+              ) : (
+                <button className="text-gray-400" onClick={switchToReviews}>
+                  Reviews (5)
+                </button>
+              )}
+            </li>
+          </ul>
+        </div>
+        {showDescription && (
+          <div className="p-5">
+            <p className="text-gray-700 font-popins">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
+              delectus deserunt facilis officiis fuga optio, saepe ratione!
+              Deserunt aut nam eveniet possimus recusandae? Saepe illo commodi
+              ratione tempora eum dolorum?
+            </p>
+            <div className="flex flex-row justify-around items-center">
+              <img
+                src={couchProduct1}
+                alt="Product Image"
+                className="w-60 h-30 my-5 object-cover rounded-2xl box-border hover:scale-105 transition-transform"
+              />
+              <img
+                src={couchProduct2}
+                alt="Product Image"
+                className="w-60 h-30 my-5 object-cover rounded-2xl box-border hover:scale-105 transition-transform"
+              />
+            </div>
+          </div>
+        )}
+        {showAditionnalInformation && (
+          <div className="p-5">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
+              delectus deserunt facilis officiis fuga optio, saepe ratione!
+              Deserunt aut nam eveniet possimus recusandae? Saepe illo commodi
+              ratione tempora eum dolorum?
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
+              delectus deserunt facilis officiis fuga optio, saepe ratione!
+              Deserunt aut nam eveniet possimus recusandae? Saepe illo commodi
+              ratione tempora eum dolorum?
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
+              delectus deserunt facilis officiis fuga optio, saepe ratione!
+              Deserunt aut nam eveniet possimus recusandae? Saepe illo commodi
+              ratione tempora eum dolorum?
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
+              delectus deserunt facilis officiis fuga optio, saepe ratione!
+              Deserunt aut nam eveniet possimus recusandae? Saepe illo commodi
+              ratione tempora eum dolorum?
+            </p>
+          </div>
+        )}
+        {showReviews && (
+          <div className="p-5">
+            <div>
+              <p className="font-bold text-2xl">John Doe</p>
+              <p className="text-gray-600">5.0</p>
+              <p className="text-gray-600">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
+                delectus deserunt facilis officiis fuga optio, saepe ratione!
+                Deserunt aut nam eveniet possimus recusandae? Saepe illo commodi
+                ratione tempora eum dolorum?
+              </p>
+            </div>
+            <div>
+              <p className="font-bold text-2xl">John Doe</p>
+              <p className="text-gray-600">5.0</p>
+              <p className="text-gray-600">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
+                delectus deserunt facilis officiis fuga optio, saepe ratione!
+                Deserunt aut nam eveniet possimus recusandae? Saepe illo commodi
+                ratione tempora eum dolorum?
+              </p>
+            </div>
+            <div>
+              <p className="font-bold text-2xl">John Doe</p>
+              <p className="text-gray-600">5.0</p>
+              <p className="text-gray-600">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
+                delectus deserunt facilis officiis fuga optio, saepe ratione!
+                Deserunt aut nam eveniet possimus recusandae? Saepe illo commodi
+                ratione tempora eum dolorum?
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="flex flex-col gap-5 justify-start items-center w-full">
+        <h2 className="text-2xl font-bold align-middle">Related Products</h2>
+        <div className="flex flex-row gap-5 justify-start items-start w-120">
+          {[1, 2, 3, 4].map((_, index) => (
+            <ProductCard
+              key={index}
+              image={couch}
+              title="ASGARD SOFA"
+              price="250"
+              discount="200"
+              description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+              feature="New"
+              id={index}
+            />
+          ))}
         </div>
       </div>
     </div>
