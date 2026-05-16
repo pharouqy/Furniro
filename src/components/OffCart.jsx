@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import Context from "../hooks/Context";
 
 function OffCart({ panier, isOpen, setIsOpen }) {
-  const { setQuantity } = useContext(Context);
+  const { setQuantity, quantity, setPanier } = useContext(Context);
   const [removeFromCart, setRemoveFromCart] = useState(false);
   const subtotal = panier.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -31,7 +31,7 @@ function OffCart({ panier, isOpen, setIsOpen }) {
               <div className="flex flex-col gap-4">
                 {panier.length === 0 ? (
                   <p>Your cart is empty.</p>
-                ) : removeFromCart ? (
+                ) : !quantity ? (
                   <p>Item removed from cart.</p>
                 ) : (
                   panier.map((item) => (
@@ -44,6 +44,7 @@ function OffCart({ panier, isOpen, setIsOpen }) {
                         onClick={() => {
                           setRemoveFromCart(true);
                           setQuantity(0);
+                          setPanier([]);
                         }}
                       >
                         X
