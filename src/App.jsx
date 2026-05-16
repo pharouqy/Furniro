@@ -8,9 +8,10 @@ import Context from "./hooks/Context";
 
 const App = () => {
   const [quantity, setQuantity] = useState(0);
+  const [panier, setPanier] = useState([]);
   return (
     <div className="App">
-      <Context.Provider value={{ quantity, setQuantity }}>
+      <Context.Provider value={{ quantity, setQuantity, panier, setPanier }}>
         <BrowserRouter>
           <Header />
           <RouteIndex />

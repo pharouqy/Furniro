@@ -25,9 +25,49 @@ function SingleProduct() {
   const [selectedColor, setSelectedColor] = useState("");
   const [cart, setCart] = useState(0);
   const { setQuantity } = useContext(Context);
+  const { panier, setPanier } = useContext(Context);
 
-  const addToCart = () => {
-    setQuantity(cart);
+  const addToPanier = () => {
+    // empêcher l'ajout de 0 produit
+    if (cart <= 0) return;
+
+    const newItem = {
+      productId: 123,
+      quantity: cart,
+      picture: couch,
+      title: "ASGARD SOFA",
+      price: 250000,
+      size: selectedSize,
+      color: selectedColor,
+    };
+
+    const existingItem = panier.find(
+      (item) =>
+        item.productId === newItem.productId &&
+        item.size === newItem.size &&
+        item.color === newItem.color,
+    );
+    if (existingItem) {
+      const updatedPanier = panier.map((item) =>
+        item.productId === newItem.productId &&
+        item.size === newItem.size &&
+        item.color === newItem.color
+          ? {
+              ...item,
+              quantity: item.quantity + cart,
+            }
+          : item,
+      );
+
+      setPanier(updatedPanier);
+    } else {
+      setPanier([...panier, newItem]);
+    }
+    setQuantity(
+      panier.reduce((total, item) => total + item.quantity, 0) + cart,
+    );
+    // reset quantité après ajout
+    setCart(0);
   };
 
   const [showDescription, setShowDescription] = useState(true);
@@ -176,7 +216,7 @@ function SingleProduct() {
             </div>
             <button
               className="border text-zinc-950 text-xl rounded-2xl px-1 py-2 cursor-pointer hover:bg-amber-500 hover:text-amber-50 transition-all duration-300 ease-in-out"
-              onClick={addToCart}
+              onClick={addToPanier}
             >
               Add to cart
             </button>
