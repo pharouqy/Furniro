@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import Context from "../hooks/Context";
 
 function OffCart({ panier, isOpen, setIsOpen }) {
+  const { setQuantity } = useContext(Context);
   const [removeFromCart, setRemoveFromCart] = useState(false);
   const subtotal = panier.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -39,7 +41,10 @@ function OffCart({ panier, isOpen, setIsOpen }) {
                     >
                       <span
                         className="text-gray-500"
-                        onClick={() => setRemoveFromCart(true)}
+                        onClick={() => {
+                          setRemoveFromCart(true);
+                          setQuantity(0);
+                        }}
                       >
                         X
                       </span>

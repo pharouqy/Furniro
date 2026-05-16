@@ -16,6 +16,7 @@ import OffCart from "./OffCart";
 function Header() {
   const { quantity, panier } = useContext(Context);
   const [isOpen, setIsOpen] = useState(false);
+
   return (
     <>
       <div className="header flex justify-between items-center py-6 px-6">

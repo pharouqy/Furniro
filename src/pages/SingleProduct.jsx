@@ -24,8 +24,9 @@ function SingleProduct() {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [cart, setCart] = useState(0);
-  const { setQuantity } = useContext(Context);
   const { panier, setPanier } = useContext(Context);
+
+  const { setQuantity } = useContext(Context);
 
   const addToPanier = () => {
     // empêcher l'ajout de 0 produit
