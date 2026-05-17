@@ -1,9 +1,9 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import Context from "../hooks/Context";
 
 function OffCart({ panier, isOpen, setIsOpen }) {
-  const { setQuantity, quantity, setPanier } = useContext(Context);
-  const [removeFromCart, setRemoveFromCart] = useState(false);
+  const { setPanier, setQuantity, quantity } = useContext(Context);
+
   const subtotal = panier.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
@@ -17,9 +17,11 @@ function OffCart({ panier, isOpen, setIsOpen }) {
             className="overlay fixed top-0 left-0 bg-black/50 w-full h-full z-50"
             onClick={() => setIsOpen(!isOpen)}
           ></div>
-          <div className="off-canvas-wrap w-80 min-h-full bg-white fixed top-0 right-0 z-50 p-6 flex flex-col gap-6">
+
+          <div className="off-canvas-wrap w-70 h-50 bg-white fixed top-0 right-0 z-50 p-6 flex flex-col gap-6 overflow-y-auto">
             <div className="flex justify-between">
               <h2>Shopping Cart</h2>
+
               <span
                 className="close-button cursor-pointer"
                 onClick={() => setIsOpen(!isOpen)}
@@ -27,12 +29,11 @@ function OffCart({ panier, isOpen, setIsOpen }) {
                 X
               </span>
             </div>
+
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-4">
                 {panier.length === 0 ? (
                   <p>Your cart is empty.</p>
-                ) : !quantity ? (
-                  <p>Item removed from cart.</p>
                 ) : (
                   panier.map((item) => (
                     <div
@@ -40,25 +41,37 @@ function OffCart({ panier, isOpen, setIsOpen }) {
                       className="flex gap-3 items-center"
                     >
                       <span
-                        className="text-gray-500"
+                        className="text-gray-500 cursor-pointer"
                         onClick={() => {
-                          setRemoveFromCart(true);
-                          setQuantity(0);
-                          setPanier([]);
+                          setPanier(
+                            panier.filter(
+                              (i) =>
+                                !(
+                                  i.productId === item.productId &&
+                                  i.size === item.size &&
+                                  i.color === item.color
+                                ),
+                            ),
+                          );
+                          setQuantity(quantity - item.quantity);
                         }}
                       >
                         X
                       </span>
+
                       <img
                         src={item.picture}
                         alt={item.title}
                         className="w-16 h-16 object-cover rounded"
                       />
+
                       <div>
                         <p className="font-bold">{item.title}</p>
+
                         <p>
                           {item.quantity} x {item.price.toLocaleString()} Da
                         </p>
+
                         {(item.size || item.color) && (
                           <p className="text-sm text-gray-500">
                             {item.size && `Size: ${item.size}`}
@@ -71,15 +84,23 @@ function OffCart({ panier, isOpen, setIsOpen }) {
                   ))
                 )}
               </div>
+
               <div className="flex justify-between font-bold">
                 <span>SubTotal</span>
-                <span>{removeFromCart ? 0 : subtotal.toLocaleString()} Da</span>
+                <span>{subtotal.toLocaleString()} Da</span>
               </div>
             </div>
+
             <div className="flex gap-2">
-              <button>Cart</button>
-              <button>Checkout</button>
-              <button>Comparaison</button>
+              <button className="border-1 px-4 rounded-4xl hover:bg-gray-100">
+                Cart
+              </button>
+              <button className="border-1 px-4 rounded-4xl hover:bg-gray-100">
+                Checkout
+              </button>
+              <button className="border-1 px-4 rounded-4xl hover:bg-gray-100">
+                Comparaison
+              </button>
             </div>
           </div>
         </div>
