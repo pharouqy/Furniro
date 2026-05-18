@@ -33,7 +33,7 @@ function SingleProduct() {
     if (cart <= 0) return;
 
     const newItem = {
-      productId: 123,
+      productId: Math.random().toString(36).substr(2, 9), // Génère un ID unique pour le produit
       quantity: cart,
       picture: couch,
       title: "ASGARD SOFA",
