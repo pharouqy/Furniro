@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 import { BrowserRouter } from "react-router-dom";
-import Context from "./hooks/Context";
+import Context from "./context/Context";
 
 const App = () => {
   const [quantity, setQuantity] = useState(0);

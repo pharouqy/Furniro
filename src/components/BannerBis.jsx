@@ -11,7 +11,7 @@ function BannerBis({ title, shopBanner }) {
         <img src={logo} alt="logo" className="w-7 h-7" />
       </div>
       <div>
-        <h1 className="text-center text-4xl font-bold">Shop</h1>
+        <h1 className="text-center text-4xl font-bold">{title}</h1>
 
         <p>
           <Link to="/">Home</Link> \ {title}

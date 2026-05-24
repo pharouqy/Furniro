@@ -9,7 +9,7 @@ import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 import logo from "/public/logo.svg";
 
-import Context from "../hooks/Context";
+import Context from "../context/Context";
 
 import OffCart from "./OffCart";
 

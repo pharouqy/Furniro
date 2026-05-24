@@ -16,7 +16,7 @@ import BannerProduct from "../components/BannerProduct";
 import SliderProduct from "../components/SliderProduct";
 import Stars from "../components/Stars";
 
-import Context from "../hooks/Context";
+import Context from "../context/Context";
 
 import ProductCard from "../components/ProductCard";
 

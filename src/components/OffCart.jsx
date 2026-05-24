@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import Context from "../hooks/Context";
+import Context from "../context/Context";
 
 function OffCart({ panier, isOpen, setIsOpen }) {
   const { setPanier, setQuantity, quantity } = useContext(Context);
@@ -94,9 +94,9 @@ function OffCart({ panier, isOpen, setIsOpen }) {
 
             <div className="flex gap-2">
               <Link to="/cart" onClick={() => setIsOpen(false)}>
-              <button className="border px-4 rounded-4xl hover:bg-gray-100">
-                Cart
-              </button>
+                <button className="border px-4 rounded-4xl hover:bg-gray-100">
+                  Cart
+                </button>
               </Link>
               <button className="border px-4 rounded-4xl hover:bg-gray-100">
                 Checkout

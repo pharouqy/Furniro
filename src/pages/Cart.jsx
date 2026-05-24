@@ -4,7 +4,8 @@ import Infos from "../components/Infos";
 import shopBanner from "/public/shop_banner.webp";
 
 import { useContext, useEffect } from "react";
-import Context from "../hooks/Context";
+import { Link } from "react-router-dom";
+import Context from "../context/Context";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
@@ -19,7 +20,7 @@ function Cart() {
   return (
     <div className="cart ">
       <BannerBis title={"Cart"} shopBanner={shopBanner} />
-      <div className="flex flex-row justify-around items-start gap-4 w-full h-full">
+      <div className="flex flex-row justify-center items-start gap-4 w-full h-full">
         <div className="flex flex-col w-75 h-full">
           <table className="cart-table flex flex-col gap-4">
             <thead className="bg-amber-100">
@@ -101,7 +102,11 @@ function Cart() {
                 .toFixed(2)}
             </span>
           </div>
-          <button>Check Out</button>
+          <Link to="/checkout">
+            <button className="w-full h-5 border-2 bg-amber-100 rounded hover:bg-amber-200 transition-colors">
+              Checkout
+            </button>
+          </Link>
         </div>
       </div>
       <Infos />

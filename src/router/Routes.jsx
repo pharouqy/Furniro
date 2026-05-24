@@ -7,6 +7,7 @@ import Contact from "../pages/Contact";
 import NotFound from "../pages/NotFound";
 import SingleProduct from "../pages/SingleProduct";
 import Cart from "../pages/Cart";
+import Checkout from "../pages/Checkout";
 
 function RouteIndex() {
   return (
@@ -17,6 +18,7 @@ function RouteIndex() {
       <Route path="/contact" element={<Contact />} />
       <Route path="/product/:id" element={<SingleProduct />} />
       <Route path="/cart" element={<Cart />} />
+      <Route path="/checkout" element={<Checkout />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
