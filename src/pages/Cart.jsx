@@ -103,7 +103,7 @@ function Cart() {
             </span>
           </div>
           <Link to="/checkout">
-            <button className="w-full h-5 border-2 bg-amber-100 rounded hover:bg-amber-200 transition-colors">
+            <button className="w-full h-5 border-2 bg-amber-100 rounded hover:bg-amber-200 transition-colors cursor-pointer">
               Checkout
             </button>
           </Link>

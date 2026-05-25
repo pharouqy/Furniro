@@ -94,14 +94,16 @@ function OffCart({ panier, isOpen, setIsOpen }) {
 
             <div className="flex gap-2">
               <Link to="/cart" onClick={() => setIsOpen(false)}>
-                <button className="border px-4 rounded-4xl hover:bg-gray-100">
+                <button className="border px-4 rounded-4xl hover:bg-gray-100 cursor-pointer">
                   Cart
                 </button>
               </Link>
-              <button className="border px-4 rounded-4xl hover:bg-gray-100">
-                Checkout
-              </button>
-              <button className="border px-4 rounded-4xl hover:bg-gray-100">
+              <Link to="/checkout" onClick={() => setIsOpen(false)}>
+                <button className="border px-4 rounded-4xl hover:bg-gray-100 cursor-pointer">
+                  Checkout
+                </button>
+              </Link>
+              <button className="border px-4 rounded-4xl hover:bg-gray-100 cursor-pointer">
                 Comparaison
               </button>
             </div>
