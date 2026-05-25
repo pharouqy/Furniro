@@ -38,13 +38,13 @@ function Checkout() {
               {panier.map((item) => (
                 <tr className="flex flex-row w-full h-full justify-between items-center">
                   <td className="text-lg font-bold my-1">{item.title} x {item.quantity}</td>
-                  <td>{item.price}</td>
+                  <td>{item.price * item.quantity}</td>
                 </tr>
               ))}
               <tr className="flex flex-row w-full h-full justify-between items-center">
                 <td>Total</td>
                 <td className="text-2xl font-bold text-amber-900 my-3">
-                  {panier.reduce((acc, item) => acc + item.price, 0)}
+                  {panier.reduce((acc, item) => acc + item.price * item.quantity, 0)}
                 </td>
               </tr>
             </tbody>

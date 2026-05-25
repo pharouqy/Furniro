@@ -54,6 +54,10 @@ function Form() {
             <option value="us">United States</option>
             <option value="ca">Canada</option>
             <option value="uk">United Kingdom</option>
+            <option value="au">Australia</option>
+            <option value="fr">France</option>
+            <option value="de">Germany</option>
+            <option value="dz">Algeria</option>
           </select>
         </div>
         <div className="flex flex-col w-full">
