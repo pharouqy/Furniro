@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 import logo from "/public/logo.svg";
@@ -14,9 +14,13 @@ import Context from "../context/Context";
 import OffCart from "./OffCart";
 
 function Header() {
-  const { quantity, panier } = useContext(Context);
+  const { quantity, panier, countOfLikes, setCountOfLikes } =
+    useContext(Context);
   const [isOpen, setIsOpen] = useState(false);
-
+  function handleLike() {
+    alert("Farouk");
+    setCountOfLikes(0);
+  }
   return (
     <>
       <div className="header flex justify-between items-center py-6 px-6">
@@ -48,7 +52,13 @@ function Header() {
             <li>
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </li>
-            <li>
+            <li
+              className="relative cursor-pointer"
+              onclick={() => handleLike()}
+            >
+              <span className="bg-red-500 text-white rounded-2xl px-1 absolute bottom-1.5 left-1.5">
+                {countOfLikes}
+              </span>
               <FontAwesomeIcon icon={faHeart} />
             </li>
             <li

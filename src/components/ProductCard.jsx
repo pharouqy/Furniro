@@ -1,9 +1,13 @@
+import { useState, useContext } from "react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
 import { faCodeCompare } from "@fortawesome/free-solid-svg-icons";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-regular-svg-icons";
 
 import { Link } from "react-router-dom";
+
+import Context from "../context/Context";
 
 function ProductCard({
   image,
@@ -14,6 +18,9 @@ function ProductCard({
   feature,
   id,
 }) {
+  const { countOfLikes, setCountOfLikes } = useContext(Context);
+  const [isliked, setIsLiked] = useState(false);
+  console.log(countOfLikes);
   return (
     <article className="relative rounded-4xl flex flex-col justify-items-start items-flex-start w-full h-45 group">
       <span
@@ -53,8 +60,21 @@ function ProductCard({
             <FontAwesomeIcon icon={faCodeCompare} />
             Compare
           </button>
-          <button className="cursor-pointer">
-            <FontAwesomeIcon icon={faHeart} />
+          <button
+            className="cursor-pointer"
+            onClick={() => {
+              setIsLiked(!isliked);
+              setCountOfLikes(isliked ? countOfLikes - 1 : countOfLikes + 1);
+            }}
+          >
+            {isliked ? (
+              <FontAwesomeIcon
+                icon={faHeart}
+                className="text-xl transition-all duration-300 hover:scale-100 active:scale-100 text-red-500 "
+              />
+            ) : (
+              <FontAwesomeIcon icon={faHeart} />
+            )}
             Like
           </button>
         </div>

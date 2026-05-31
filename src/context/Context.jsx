@@ -5,6 +5,8 @@ const Context = createContext({
   setQuantity: () => {},
   panier: [],
   setPanier: () => {},
+  countOfLikes: 0,
+  setCountOfLikes: () => {},
 });
 
 export default Context;

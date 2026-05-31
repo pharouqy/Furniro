@@ -9,9 +9,19 @@ import Context from "./context/Context";
 const App = () => {
   const [quantity, setQuantity] = useState(0);
   const [panier, setPanier] = useState([]);
+  const [countOfLikes, setCountOfLikes] = useState(0);
   return (
     <div className="App">
-      <Context.Provider value={{ quantity, setQuantity, panier, setPanier }}>
+      <Context.Provider
+        value={{
+          quantity,
+          setQuantity,
+          panier,
+          setPanier,
+          countOfLikes,
+          setCountOfLikes,
+        }}
+      >
         <BrowserRouter>
           <Header />
           <RouteIndex />
