@@ -1,54 +1,42 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 import couchSlider1 from "/public/couch-slider1.jpg";
 import couchSlider2 from "/public/couch-slider2.jpg";
 import couchSlider3 from "/public/couch-slider3.jpg";
 import couchSlider4 from "/public/couch-slider4.jpg";
 
-function SliderProduct() {
-  const [selectedImage, setSelectedImage] = useState(couchSlider1);
+export default function SliderProduct({ images = [] }) {
+  const defaultImages = [couchSlider1, couchSlider2, couchSlider3, couchSlider4];
+  const list = images.length > 0 ? images : defaultImages;
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const handleSlider = (e) => {
-    const slider = e.target.src;
-    setSelectedImage(slider);
-  };
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [images]);
+
   return (
-    <div className="flex flex-row gap-5 justify-start items-start">
-      <div className="flex flex-col gap-2 justify-start items-start">
-        <img
-          src={couchSlider1}
-          alt="Couch Slider 1"
-          onClick={handleSlider}
-          className="w-50 h-full object-cover cursor-pointer rounded-xl"
-        />
-        <img
-          src={couchSlider2}
-          alt="Couch Slider 2"
-          onClick={handleSlider}
-          className="w-50 h-full object-cover cursor-pointer rounded-xl"
-        />
-        <img
-          src={couchSlider3}
-          alt="Couch Slider 3"
-          onClick={handleSlider}
-          className="w-50 h-full object-cover cursor-pointer rounded-xl"
-        />
-        <img
-          src={couchSlider4}
-          alt="Couch Slider 4"
-          onClick={handleSlider}
-          className="w-50 h-full object-cover cursor-pointer rounded-xl"
-        />
+    <div className="grid w-full gap-4 md:grid-cols-[88px_1fr]">
+      <div className="flex gap-3 overflow-x-auto md:flex-col md:overflow-visible">
+        {list.map((img, idx) => (
+          <button
+            key={img}
+            onClick={() => setActiveIndex(idx)}
+            className={`h-20 w-20 shrink-0 overflow-hidden rounded-lg border-2 bg-stone-100 transition-all ${
+              activeIndex === idx ? "border-[#B88E2F]" : "border-transparent opacity-70 hover:opacity-100"
+            }`}
+            aria-label={`Show product image ${idx + 1}`}
+          >
+            <img src={img} alt={`Product thumbnail ${idx + 1}`} className="h-full w-full object-cover" />
+          </button>
+        ))}
       </div>
-      <div>
+
+      <div className="aspect-square overflow-hidden rounded-lg bg-[#EEF4EF] md:aspect-[5/4]">
         <img
-          src={selectedImage}
-          alt=""
-          className="flex flex-row justify-center items-start w-200 h-full object-cover rounded-2xl"
+          src={list[activeIndex] || list[0]}
+          alt="Product detail"
+          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
         />
       </div>
     </div>
   );
 }
-
-export default SliderProduct;

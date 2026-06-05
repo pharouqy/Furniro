@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-
+import { useMemo, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSquareFacebook,
@@ -7,426 +7,275 @@ import {
   faSquareXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 
-import couchProduct1 from "../../public/couchProduct1.jpg";
-import couchProduct2 from "../../public/couchProduct2.jpg";
+import couchProduct1 from "/public/couchProduct1.jpg";
+import couchProduct2 from "/public/couchProduct2.jpg";
+import couch from "/public/couch.jpg";
+import couchSlider1 from "/public/couch-slider1.jpg";
+import shopBanner from "/public/shop_banner.webp";
 
-import couch from "../../public/couch.jpg";
-
-import BannerProduct from "../components/BannerProduct";
+import Banner from "@/common/components/layout/Banner";
 import SliderProduct from "../components/SliderProduct";
 import Stars from "../components/Stars";
+import ProductCard from "@/common/components/molecules/ProductCard";
+import { useCartStore } from "@/features/cart/store/cartStore";
 
-import Context from "../context/Context";
+export default function SingleProduct() {
+  const { id } = useParams();
+  const addToCart = useCartStore((state) => state.addToCart);
+  const [selectedSize, setSelectedSize] = useState("L");
+  const [selectedColor, setSelectedColor] = useState("blue");
+  const [quantity, setQuantity] = useState(1);
+  const [activeTab, setActiveTab] = useState("description");
 
-import ProductCard from "../components/ProductCard";
-
-function SingleProduct() {
-  const [selectedSize, setSelectedSize] = useState("");
-  const [selectedColor, setSelectedColor] = useState("");
-  const [cart, setCart] = useState(0);
-  const { panier, setPanier } = useContext(Context);
-
-  const { setQuantity } = useContext(Context);
-
-  const addToPanier = () => {
-    // empêcher l'ajout de 0 produit
-    if (cart <= 0) return;
-
-    const newItem = {
-      productId: Math.random().toString(36).substr(2, 9), // Génère un ID unique pour le produit
-      quantity: cart,
-      picture: couch,
+  const product = useMemo(() => {
+    const list = [
+      { id: 1, title: "Syltherine Sofa", price: 3600000, description: "A stylish sofa with generous proportions and soft support." },
+      { id: 2, title: "Leviosa Sofa", price: 1250000, description: "A minimalist sofa for compact living rooms and quiet corners." },
+      { id: 3, title: "Lolito Sofa", price: 14000000, description: "A luxury sofa with deep comfort and a refined silhouette." },
+      { id: 4, title: "Respira Sofa", price: 500000, description: "An easy outdoor piece for relaxed hosting and open-air rooms." },
+    ];
+    return list.find((item) => String(item.id) === String(id)) || {
+      id: id || "asgard",
       title: "ASGARD SOFA",
       price: 250000,
-      size: selectedSize,
-      color: selectedColor,
+      description: "A clean, grounded sofa designed for everyday comfort.",
     };
+  }, [id]);
 
-    const existingItem = panier.find(
-      (item) =>
-        item.productId === newItem.productId &&
-        item.size === newItem.size &&
-        item.color === newItem.color,
+  const handleAddToCart = () => {
+    addToCart(
+      {
+        id: String(product.id),
+        title: product.title,
+        price: product.price,
+        picture: couch,
+        size: selectedSize,
+        color: selectedColor,
+      },
+      quantity
     );
-    if (existingItem) {
-      const updatedPanier = panier.map((item) =>
-        item.productId === newItem.productId &&
-        item.size === newItem.size &&
-        item.color === newItem.color
-          ? {
-              ...item,
-              quantity: item.quantity + cart,
-            }
-          : item,
-      );
 
-      setPanier(updatedPanier);
-    } else {
-      setPanier([...panier, newItem]);
-    }
-    setQuantity(
-      panier.reduce((total, item) => total + item.quantity, 0) + cart,
-    );
-    // reset quantité après ajout
-    setCart(0);
+    alert(`${quantity} x ${product.title} has been added to your cart.`);
+    setQuantity(1);
   };
 
-  const [showDescription, setShowDescription] = useState(true);
-  const [showAditionnalInformation, setShowAditionnalInformation] =
-    useState(false);
-  const [showReviews, setShowReviews] = useState(false);
-
-  const switchToReviews = () => {
-    setShowDescription(false);
-    setShowAditionnalInformation(false);
-    setShowReviews(true);
-  };
-
-  const switchToDescription = () => {
-    setShowDescription(true);
-    setShowAditionnalInformation(false);
-    setShowReviews(false);
-  };
-
-  const switchToAditionnalInformation = () => {
-    setShowDescription(false);
-    setShowAditionnalInformation(true);
-    setShowReviews(false);
-  };
+  const productImages = [couch, couchProduct1, couchProduct2, couchSlider1];
+  const colorOptions = [
+    { name: "red", label: "Clay red", className: "bg-[#C76543]" },
+    { name: "green", label: "Sage green", className: "bg-[#637969]" },
+    { name: "blue", label: "Deep blue", className: "bg-[#2F4F6F]" },
+  ];
 
   return (
-    <div className="single_product flex flex-col gap-5 justify-start items-center">
-      <BannerProduct />
-      <div className="flex flex-row gap-5 justify-center items-start w-120">
-        <SliderProduct />
-        <div className="flex flex-col gap-2 justify-start items-start">
-          <h2 className="font-bold text-5xl">ASGARD SOFA</h2>
-          <span className="text-3xl text-gray-300 ">250 000.00 Da</span>
-          <div className="flex flex-row gap-2 justify-start items-center">
-            <div>
-              <Stars />
-            </div>
-            <div>
-              <p>| 5 customers review</p>
-            </div>
-          </div>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non
-            ratione sint deleniti dolore corporis, neque vero nobis soluta quam.
-            Facilis inventore voluptatem veritatis! Deserunt maxime nisi
-            nesciunt cumque. Aperiam, dolores.
-          </p>
+    <main className="w-full">
+      <Banner
+        title={product.title}
+        bgImage={shopBanner}
+        breadcrumbs={[{ label: "Shop", path: "/shop" }, { label: product.title }]}
+      />
+
+      <section className="container-page grid gap-10 py-12 lg:grid-cols-[1fr_0.9fr] lg:py-16">
+        <SliderProduct images={productImages} />
+
+        <div className="flex flex-col gap-6">
           <div>
-            <h3>Size</h3>
-            <div className="flex flex-row gap-2">
-              <button
-                onClick={() => setSelectedSize("S")}
-                className={`w-5 h-5 flex items-center justify-center border border-gray-300 rounded-lg ${
-                  selectedSize === "S"
-                    ? "bg-amber-500 text-amber-50"
-                    : "bg-amber-100 hover:bg-amber-500 hover:text-amber-50"
-                }`}
-              >
-                S
-              </button>
-              <button
-                onClick={() => setSelectedSize("M")}
-                className={`w-5 h-5 flex items-center justify-center border border-gray-300 rounded-lg ${
-                  selectedSize === "M"
-                    ? "bg-amber-500 text-amber-50"
-                    : "bg-amber-100 hover:bg-amber-500 hover:text-amber-50"
-                }`}
-              >
-                M
-              </button>
-              <button
-                onClick={() => setSelectedSize("L")}
-                className={`w-5 h-5 flex items-center justify-center border border-gray-300 rounded-lg ${
-                  selectedSize === "L"
-                    ? "bg-amber-500 text-amber-50"
-                    : "bg-amber-100 hover:bg-amber-500 hover:text-amber-50"
-                }`}
-              >
-                L
-              </button>
-              <button
-                onClick={() => setSelectedSize("XL")}
-                className={`w-5 h-5 flex items-center justify-center border border-gray-300 rounded-lg ${
-                  selectedSize === "XL"
-                    ? "bg-amber-500 text-amber-50"
-                    : "bg-amber-100 hover:bg-amber-500 hover:text-amber-50"
-                }`}
-              >
-                XL
-              </button>
-              <button
-                onClick={() => setSelectedSize("XS")}
-                className={`w-5 h-5 flex items-center justify-center border border-gray-300 rounded-lg ${
-                  selectedSize === "XS"
-                    ? "bg-amber-500 text-amber-50"
-                    : "bg-amber-100 hover:bg-amber-500 hover:text-amber-50"
-                }`}
-              >
-                XS
-              </button>
+            <p className="eyebrow">Furniro seating</p>
+            <h1 className="mt-2 text-4xl font-extrabold leading-tight text-stone-950 md:text-5xl">
+              {product.title}
+            </h1>
+            <p className="mt-3 text-2xl font-bold text-[#8F6B1F]">
+              {product.price.toLocaleString("fr-FR")} Da
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-4 text-sm text-stone-500">
+            <Stars rating={4} />
+            <span className="h-4 w-px bg-stone-200" />
+            <span>5 customer reviews</span>
+          </div>
+
+          <p className="section-copy">{product.description} Premium upholstery, a solid frame, and balanced proportions make it easy to style in both compact and generous spaces.</p>
+
+          <div className="grid gap-5 rounded-lg border border-stone-200 bg-white p-5">
+            <div>
+              <h3 className="text-sm font-bold text-stone-950">Size</h3>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {["XS", "S", "M", "L", "XL"].map((size) => (
+                  <button
+                    key={size}
+                    onClick={() => setSelectedSize(size)}
+                    className={`h-10 min-w-10 rounded-md border px-3 text-sm font-bold transition-colors ${
+                      selectedSize === size
+                        ? "border-[#B88E2F] bg-[#B88E2F] text-white"
+                        : "border-stone-200 bg-white text-stone-700 hover:border-[#B88E2F]"
+                    }`}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold text-stone-950">Color</h3>
+              <div className="mt-3 flex flex-wrap gap-3">
+                {colorOptions.map((color) => (
+                  <button
+                    key={color.name}
+                    onClick={() => setSelectedColor(color.name)}
+                    className={`h-9 w-9 rounded-full border-2 ${color.className} ${
+                      selectedColor === color.name ? "border-stone-950 ring-2 ring-stone-200" : "border-white"
+                    }`}
+                    aria-label={color.label}
+                  />
+                ))}
+              </div>
             </div>
           </div>
-          <div>
-            <h3>Color</h3>
-            <div className="flex flex-row gap-2">
+
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <div className="flex h-12 w-full items-center justify-between rounded-md border border-stone-200 bg-white sm:w-36">
               <button
-                onClick={() => setSelectedColor("red")}
-                className={`w-2 h-2 rounded-full ${
-                  selectedColor === "red" ? "bg-red-800" : "bg-red-500"
-                }`}
-              ></button>
-              <button
-                onClick={() => setSelectedColor("green")}
-                className={`w-2 h-2 rounded-full ${
-                  selectedColor === "green" ? "bg-green-800" : "bg-green-500"
-                }`}
-              ></button>
-              <button
-                onClick={() => setSelectedColor("blue")}
-                className={`w-2 h-2 rounded-full ${
-                  selectedColor === "blue" ? "bg-blue-800" : "bg-blue-500"
-                }`}
-              ></button>
-            </div>
-          </div>
-          <div className="flex flex-row gap-1 justify-start items-center">
-            <div className="flex flex-row justify-center items-center border h-8 rounded-2xl">
-              <button
-                className="text-zinc-950 text-3xl mx-2 cursor-pointer"
-                onClick={() => setCart(Math.max(0, cart - 1))}
+                className="h-full px-4 text-lg font-bold text-stone-600 hover:text-stone-950"
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                aria-label="Decrease quantity"
               >
                 -
               </button>
               <input
-                type="text"
-                className="w-5 text-center text-3xl"
-                value={cart}
-                onChange={(e) => setCart(Number(e.target.value))}
+                type="number"
+                aria-label="Quantity"
+                className="w-12 bg-transparent text-center text-sm font-bold focus:outline-none"
+                value={quantity}
+                min="1"
+                onChange={(e) => setQuantity(Math.max(1, Number(e.target.value) || 1))}
               />
               <button
-                className="text-zinc-950 text-3xl mx-2 cursor-pointer"
-                onClick={() => setCart(cart + 1)}
+                className="h-full px-4 text-lg font-bold text-stone-600 hover:text-stone-950"
+                onClick={() => setQuantity(quantity + 1)}
+                aria-label="Increase quantity"
               >
                 +
               </button>
             </div>
+
+            <button onClick={handleAddToCart} className="btn-primary h-12 flex-1">
+              Add To Cart
+            </button>
             <button
-              className="border text-zinc-950 text-xl rounded-2xl px-1 py-2 cursor-pointer hover:bg-amber-500 hover:text-amber-50 transition-all duration-300 ease-in-out"
-              onClick={addToPanier}
+              onClick={() => alert("Comparison feature is coming soon!")}
+              className="btn-secondary h-12"
             >
-              Add to cart
-            </button>
-            <button className="border text-zinc-950 text-xl rounded-2xl px-1 py-2 cursor-pointer hover:bg-amber-500 hover:text-amber-50 transition-all duration-300 ease-in-out">
-              + Compare
+              Compare
             </button>
           </div>
-          <hr className="w-full border-gray-300" />
-          <div className="flex flex-row gap-5 justify-start items-start">
-            <ul>
-              <li>
-                <p>SKU</p>
-              </li>
-              <li>
-                <p>Category</p>
-              </li>
-              <li>
-                <p>Tags</p>
-              </li>
-              <li>
-                <p>Share</p>
-              </li>
-            </ul>
-            <ul>
-              <li>
-                <p>: 123456789</p>
-              </li>
-              <li>
-                <p>: Sofas</p>
-              </li>
-              <li>
-                <p>: Sofa, Chair, Home, Shop</p>
-              </li>
-              <li className="flex">
-                :
-                <div>
-                  <FontAwesomeIcon
-                    icon={faSquareFacebook}
-                    className="text-2xl rounded-2xl cursor-pointer"
-                  />
-                  <FontAwesomeIcon
-                    icon={faSquareLinkedin}
-                    className="text-2xl rounded-2xl cursor-pointer"
-                  />
-                  <FontAwesomeIcon
-                    icon={faSquareXTwitter}
-                    className="text-2xl rounded-2xl cursor-pointer"
-                  />
+
+          <dl className="grid grid-cols-[90px_1fr] gap-x-4 gap-y-2 border-t border-stone-200 pt-6 text-sm text-stone-500">
+            <dt>SKU</dt>
+            <dd>: SS-00{product.id}</dd>
+            <dt>Category</dt>
+            <dd>: Sofas</dd>
+            <dt>Tags</dt>
+            <dd>: Sofa, Chair, Home, Shop</dd>
+            <dt>Share</dt>
+            <dd className="flex items-center gap-3 text-lg text-stone-900">
+              :
+              <button aria-label="Share on Facebook" className="hover:text-[#B88E2F]"><FontAwesomeIcon icon={faSquareFacebook} /></button>
+              <button aria-label="Share on LinkedIn" className="hover:text-[#B88E2F]"><FontAwesomeIcon icon={faSquareLinkedin} /></button>
+              <button aria-label="Share on X" className="hover:text-[#B88E2F]"><FontAwesomeIcon icon={faSquareXTwitter} /></button>
+            </dd>
+          </dl>
+        </div>
+      </section>
+
+      <section className="border-y border-stone-200 bg-white py-12">
+        <div className="container-page">
+          <div className="overflow-x-auto">
+            <nav aria-label="Product information" className="min-w-max border-b border-stone-100">
+              {[
+                { id: "description", label: "Description" },
+                { id: "info", label: "Additional Information" },
+                { id: "reviews", label: "Reviews (5)" },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`mr-8 border-b-2 px-1 pb-4 text-base font-bold transition-colors ${
+                    activeTab === tab.id ? "border-stone-950 text-stone-950" : "border-transparent text-stone-400 hover:text-stone-700"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </nav>
+          </div>
+
+          <div className="py-8 text-sm leading-7 text-stone-600">
+            {activeTab === "description" && (
+              <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+                <p>
+                  Embodying clean lines and modern design, this sofa is wrapped in premium upholstery and set on tapered wooden legs. It is designed for movie nights, long conversations, and relaxed everyday use.
+                </p>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <img src={couchProduct1} alt="Sofa detail view" className="h-72 w-full rounded-lg object-cover" />
+                  <img src={couchProduct2} alt="Sofa styled in room" className="h-72 w-full rounded-lg object-cover" />
                 </div>
-              </li>
-            </ul>
+              </div>
+            )}
+
+            {activeTab === "info" && (
+              <div className="grid gap-3 sm:grid-cols-2">
+                <p><strong>Frame:</strong> Hardwood solid frame with plywood reinforcements.</p>
+                <p><strong>Upholstery:</strong> Premium linen texture upholstery material.</p>
+                <p><strong>Legs:</strong> Natural ash wood legs with protection pads.</p>
+                <p><strong>Comfort:</strong> High density foam cushions for long-lasting support.</p>
+              </div>
+            )}
+
+            {activeTab === "reviews" && (
+              <div className="grid gap-4">
+                {[
+                  { author: "John Doe", rating: 5, date: "June 2, 2026", comment: "Outstanding sofa. Perfect fit for my living room." },
+                  { author: "Jane Smith", rating: 4, date: "May 28, 2026", comment: "Very comfortable and easy to assemble." },
+                  { author: "Alex Johnson", rating: 5, date: "May 15, 2026", comment: "High quality materials and quick shipping." },
+                ].map((review) => (
+                  <article key={`${review.author}-${review.date}`} className="rounded-lg border border-stone-200 p-5">
+                    <div className="flex flex-wrap items-center gap-3">
+                      <span className="font-bold text-stone-950">{review.author}</span>
+                      <Stars rating={review.rating} />
+                      <span className="text-xs text-stone-400">{review.date}</span>
+                    </div>
+                    <p className="mt-3">{review.comment}</p>
+                  </article>
+                ))}
+              </div>
+            )}
           </div>
         </div>
-      </div>
-      <hr className="w-full border-gray-300" />
-      <div className="flex flex-col gap-5 justify-start items-start w-full">
-        <div className="flex flex-row gap-5 justify-center items-center w-full">
-          <ul className="flex flex-row gap-5 justify-center items-center w-full text-2xl">
-            <li>
-              {showDescription ? (
-                <button
-                  className="text-gray-800 underline"
-                  onClick={switchToDescription}
-                >
-                  Description
-                </button>
-              ) : (
-                <button className="text-gray-400" onClick={switchToDescription}>
-                  Description
-                </button>
-              )}
-            </li>
-            <li>
-              {showAditionnalInformation ? (
-                <button
-                  className="text-gray-800 underline"
-                  onClick={switchToAditionnalInformation}
-                >
-                  Aditionnal information
-                </button>
-              ) : (
-                <button
-                  className="text-gray-400"
-                  onClick={switchToAditionnalInformation}
-                >
-                  Aditionnal information
-                </button>
-              )}
-            </li>
-            <li>
-              {showReviews ? (
-                <button
-                  className="text-gray-800 underline"
-                  onClick={switchToReviews}
-                >
-                  Reviews (5)
-                </button>
-              ) : (
-                <button className="text-gray-400" onClick={switchToReviews}>
-                  Reviews (5)
-                </button>
-              )}
-            </li>
-          </ul>
+      </section>
+
+      <section className="container-page py-14">
+        <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="eyebrow">More to love</p>
+            <h2 className="section-heading mt-2">Related Products</h2>
+          </div>
+          <Link to="/shop" className="btn-secondary w-fit">Back to Shop</Link>
         </div>
-        {showDescription && (
-          <div className="p-5">
-            <p className="text-gray-700 font-popins">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
-              delectus deserunt facilis officiis fuga optio, saepe ratione!
-              Deserunt aut nam eveniet possimus recusandae? Saepe illo commodi
-              ratione tempora eum dolorum?
-            </p>
-            <div className="flex flex-row justify-around items-center">
-              <img
-                src={couchProduct1}
-                alt="Product Image"
-                className="w-60 h-30 my-5 object-cover rounded-2xl box-border hover:scale-105 transition-transform"
-              />
-              <img
-                src={couchProduct2}
-                alt="Product Image"
-                className="w-60 h-30 my-5 object-cover rounded-2xl box-border hover:scale-105 transition-transform"
-              />
-            </div>
-          </div>
-        )}
-        {showAditionnalInformation && (
-          <div className="p-5">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
-              delectus deserunt facilis officiis fuga optio, saepe ratione!
-              Deserunt aut nam eveniet possimus recusandae? Saepe illo commodi
-              ratione tempora eum dolorum?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
-              delectus deserunt facilis officiis fuga optio, saepe ratione!
-              Deserunt aut nam eveniet possimus recusandae? Saepe illo commodi
-              ratione tempora eum dolorum?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
-              delectus deserunt facilis officiis fuga optio, saepe ratione!
-              Deserunt aut nam eveniet possimus recusandae? Saepe illo commodi
-              ratione tempora eum dolorum?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
-              delectus deserunt facilis officiis fuga optio, saepe ratione!
-              Deserunt aut nam eveniet possimus recusandae? Saepe illo commodi
-              ratione tempora eum dolorum?
-            </p>
-          </div>
-        )}
-        {showReviews && (
-          <div className="p-5">
-            <div>
-              <p className="font-bold text-2xl">John Doe</p>
-              <p className="text-gray-600">5.0</p>
-              <p className="text-gray-600">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
-                delectus deserunt facilis officiis fuga optio, saepe ratione!
-                Deserunt aut nam eveniet possimus recusandae? Saepe illo commodi
-                ratione tempora eum dolorum?
-              </p>
-            </div>
-            <div>
-              <p className="font-bold text-2xl">John Doe</p>
-              <p className="text-gray-600">5.0</p>
-              <p className="text-gray-600">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
-                delectus deserunt facilis officiis fuga optio, saepe ratione!
-                Deserunt aut nam eveniet possimus recusandae? Saepe illo commodi
-                ratione tempora eum dolorum?
-              </p>
-            </div>
-            <div>
-              <p className="font-bold text-2xl">John Doe</p>
-              <p className="text-gray-600">5.0</p>
-              <p className="text-gray-600">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
-                delectus deserunt facilis officiis fuga optio, saepe ratione!
-                Deserunt aut nam eveniet possimus recusandae? Saepe illo commodi
-                ratione tempora eum dolorum?
-              </p>
-            </div>
-          </div>
-        )}
-      </div>
-      <div className="flex flex-col gap-5 justify-start items-center w-full">
-        <h2 className="text-2xl font-bold align-middle">Related Products</h2>
-        <div className="flex flex-row gap-5 justify-start items-start w-120">
-          {[1, 2, 3, 4].map((_, index) => (
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {[1, 2, 3, 4].map((itemIndex) => (
             <ProductCard
-              key={index}
+              key={itemIndex}
+              id={itemIndex}
+              title={`Related Sofa ${itemIndex}`}
+              description="A comfortable piece for a collected home."
+              price="250000 Da"
+              discount={itemIndex === 2 ? "15%" : ""}
               image={couch}
-              title="ASGARD SOFA"
-              price="250"
-              discount="200"
-              description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
-              feature="New"
-              id={index}
             />
           ))}
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
-
-export default SingleProduct;

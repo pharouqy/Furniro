@@ -1,149 +1,177 @@
-function Form() {
+function Field({ id, label, required, error, children }) {
   return (
-    <div className="flex flex-col w-1/2 gap-4 mx-10">
-      <h2 className="text-2xl font-bold">Billing Details</h2>
-      <form className="flex flex-col gap-4 h-full">
-        <div className="flex flex-row gap-4 w-full">
-          <div className="flex flex-col w-full">
-            <label htmlFor="firstName" className="text-lg font-bold">
-              First Name
-            </label>
+    <div className="flex flex-col gap-2">
+      <label htmlFor={id} className="text-sm font-bold text-stone-800">
+        {label} {required && <span className="text-[#C76543]">*</span>}
+      </label>
+      {children}
+      {error && (
+        <span className="text-xs font-semibold text-[#C76543]" role="alert">
+          {error}
+        </span>
+      )}
+    </div>
+  );
+}
+
+export default function Form({ formData = {}, onChange = () => {}, errors = {} }) {
+  const countries = [
+    { code: "US", name: "United States" },
+    { code: "CA", name: "Canada" },
+    { code: "UK", name: "United Kingdom" },
+    { code: "FR", name: "France" },
+    { code: "DZ", name: "Algeria" },
+  ];
+
+  const errorClass = (field) => (errors[field] ? "border-[#C76543] focus:border-[#C76543]" : "");
+
+  return (
+    <section className="w-full">
+      <div className="mb-8">
+        <p className="eyebrow">Checkout</p>
+        <h2 className="mt-2 text-3xl font-extrabold text-stone-950">Billing Details</h2>
+      </div>
+
+      <div className="grid gap-5 rounded-lg border border-stone-200 bg-white p-6 shadow-sm md:p-8">
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Field id="firstName" label="First Name" required error={errors.firstName}>
             <input
               type="text"
               id="firstName"
               name="firstName"
               required
-              className="border-2 border-stone-200 rounded-md p-2"
+              value={formData.firstName || ""}
+              onChange={onChange}
+              className={`field-control ${errorClass("firstName")}`}
             />
-          </div>
-          <div className="flex flex-col w-full">
-            <label htmlFor="lastName" className="text-lg font-bold">
-              Last Name
-            </label>
+          </Field>
+          <Field id="lastName" label="Last Name" required error={errors.lastName}>
             <input
               type="text"
               id="lastName"
               name="lastName"
               required
-              className="border-2 border-stone-200 rounded-md p-2"
+              value={formData.lastName || ""}
+              onChange={onChange}
+              className={`field-control ${errorClass("lastName")}`}
             />
-          </div>
+          </Field>
         </div>
-        <div className="flex flex-col w-full">
-          <label htmlFor="company" className="text-lg font-bold">
-            Company Name (Optional)
-          </label>
+
+        <Field id="company" label="Company Name">
           <input
             type="text"
             id="company"
             name="company"
-            className="border-2 border-stone-200 rounded-md p-2"
+            value={formData.company || ""}
+            onChange={onChange}
+            className="field-control"
           />
-        </div>
-        <div className="flex flex-col w-full">
-          <label htmlFor="country" className="text-lg font-bold">
-            Country / Region
-          </label>
+        </Field>
+
+        <Field id="country" label="Country / Region" required error={errors.country}>
           <select
-            name="country"
             id="country"
+            name="country"
             required
-            className="border-2 border-stone-200 rounded-md p-2"
+            value={formData.country || ""}
+            onChange={onChange}
+            className={`field-control ${errorClass("country")}`}
           >
             <option value="">Select a country / region</option>
-            <option value="us">United States</option>
-            <option value="ca">Canada</option>
-            <option value="uk">United Kingdom</option>
-            <option value="au">Australia</option>
-            <option value="fr">France</option>
-            <option value="de">Germany</option>
-            <option value="dz">Algeria</option>
+            {countries.map((country) => (
+              <option key={country.code} value={country.code}>
+                {country.name}
+              </option>
+            ))}
           </select>
-        </div>
-        <div className="flex flex-col w-full">
-          <label htmlFor="address" className="text-lg font-bold">
-            Address
-          </label>
+        </Field>
+
+        <Field id="address" label="Street Address" required error={errors.address}>
           <input
             type="text"
             id="address"
             name="address"
             required
-            className="border-2 border-stone-200 rounded-md p-2"
+            value={formData.address || ""}
+            onChange={onChange}
+            className={`field-control ${errorClass("address")}`}
           />
+        </Field>
+
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Field id="city" label="Town / City" required error={errors.city}>
+            <input
+              type="text"
+              id="city"
+              name="city"
+              required
+              value={formData.city || ""}
+              onChange={onChange}
+              className={`field-control ${errorClass("city")}`}
+            />
+          </Field>
+          <Field id="state" label="Province / State" required error={errors.state}>
+            <input
+              type="text"
+              id="state"
+              name="state"
+              required
+              value={formData.state || ""}
+              onChange={onChange}
+              className={`field-control ${errorClass("state")}`}
+            />
+          </Field>
         </div>
-        <div className="flex flex-col w-full">
-          <label htmlFor="city" className="text-lg font-bold">
-            City
-          </label>
-          <input
-            type="text"
-            id="city"
-            name="city"
-            required
-            className="border-2 border-stone-200 rounded-md p-2"
-          />
+
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Field id="zip" label="ZIP / Postal Code" required error={errors.zip}>
+            <input
+              type="text"
+              id="zip"
+              name="zip"
+              required
+              value={formData.zip || ""}
+              onChange={onChange}
+              className={`field-control ${errorClass("zip")}`}
+            />
+          </Field>
+          <Field id="phone" label="Phone" required error={errors.phone}>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              required
+              value={formData.phone || ""}
+              onChange={onChange}
+              className={`field-control ${errorClass("phone")}`}
+            />
+          </Field>
         </div>
-        <div className="flex flex-col w-full">
-          <label htmlFor="state" className="text-lg font-bold">
-            State / Province
-          </label>
-          <input
-            type="text"
-            id="state"
-            name="state"
-            required
-            className="border-2 border-stone-200 rounded-md p-2"
-          />
-        </div>
-        <div className="flex flex-col w-full">
-          <label htmlFor="zip" className="text-lg font-bold">
-            Zip / Postal Code
-          </label>
-          <input
-            type="text"
-            id="zip"
-            name="zip"
-            required
-            className="border-2 border-stone-200 rounded-md p-2"
-          />
-        </div>
-        <div className="flex flex-col w-full">
-          <label htmlFor="phone" className="text-lg font-bold">
-            Phone Number
-          </label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            required
-            className="border-2 border-stone-200 rounded-md p-2"
-          />
-        </div>
-        <div className="flex flex-col w-full">
-          <label htmlFor="email" className="text-lg font-bold">
-            Email Address
-          </label>
+
+        <Field id="email" label="Email Address" required error={errors.email}>
           <input
             type="email"
             id="email"
             name="email"
             required
-            className="border-2 border-stone-200 rounded-md p-2"
+            value={formData.email || ""}
+            onChange={onChange}
+            className={`field-control ${errorClass("email")}`}
           />
-        </div>
-        <div className="flex flex-col w-full">
+        </Field>
+
+        <Field id="message" label="Additional Information">
           <textarea
             id="message"
             name="message"
-            placeholder="Aditional informations"
-            required
-            className="border-2 border-stone-200 rounded-md p-2"
-          ></textarea>
-        </div>
-      </form>
-    </div>
+            placeholder="Delivery instructions or notes"
+            value={formData.message || ""}
+            onChange={onChange}
+            className="field-control min-h-32 resize-y"
+          />
+        </Field>
+      </div>
+    </section>
   );
 }
-
-export default Form;
