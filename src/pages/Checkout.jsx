@@ -5,6 +5,7 @@ import Banner from "@/common/components/layout/Banner";
 import Infos from "@/common/components/layout/Infos";
 import Form from "../components/Form";
 import { useCartStore } from "@/features/cart/store/cartStore";
+import { api } from "@/common/utils/api";
 import shopBanner from "/public/shop_banner.webp";
 
 export default function Checkout() {
@@ -28,6 +29,7 @@ export default function Checkout() {
     message: "",
   });
   const [errors, setErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -55,7 +57,7 @@ export default function Checkout() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
     if (items.length === 0) {
       alert("Your cart is empty. Please add products before checkout.");
       return;
@@ -71,9 +73,41 @@ export default function Checkout() {
       return;
     }
 
-    clearCart();
-    alert("Order placed successfully. Thank you for shopping with Furniro.");
-    navigate("/");
+    setSubmitting(true);
+
+    try {
+      const { orderId } = await api.createOrder({
+        items: items.map((i) => ({
+          productId: i.productId,
+          title: i.title,
+          price: i.price,
+          quantity: i.quantity,
+          size: i.size,
+          color: i.color,
+        })),
+        ...formData,
+      });
+
+      if (selectedMethod === "card") {
+        const { checkoutUrl } = await api.createCheckout({
+          orderId,
+          items: items.map((i) => ({
+            price: i.price,
+            quantity: i.quantity,
+          })),
+          customer: { email: formData.email },
+        });
+        window.location.href = checkoutUrl;
+      } else {
+        clearCart();
+        alert("Order placed successfully. Thank you for shopping with Furniro.");
+        navigate("/");
+      }
+    } catch (err) {
+      alert(err.message || "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const paymentMethods = [
@@ -89,8 +123,8 @@ export default function Checkout() {
     },
     {
       id: "card",
-      label: "Credit / Debit Card",
-      description: "Pay securely using your Visa, Mastercard, or American Express card.",
+      label: "Pay with CIB / EDAHABIA",
+      description: "Pay securely online via Chargily Pay using your CIB or EDAHABIA card.",
     },
   ];
 
@@ -180,8 +214,8 @@ export default function Checkout() {
             Your personal data will be used to process your order and support your experience on this website.
           </p>
 
-          <button onClick={handlePlaceOrder} className="btn-primary mt-6 w-full">
-            Place Order
+          <button onClick={handlePlaceOrder} disabled={submitting} className="btn-primary mt-6 w-full disabled:cursor-not-allowed disabled:opacity-60">
+            {submitting ? "Processing..." : "Place Order"}
           </button>
         </aside>
       </section>

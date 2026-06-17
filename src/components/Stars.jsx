@@ -25,7 +25,7 @@ export default function Stars({ rating = 0, interactive = false, onChange = () =
     <div 
       className="flex items-center gap-1"
       role="img" 
-      aria-label={`Note de ${rating} sur 5 étoiles`}
+      aria-label={`Rating: ${rating} out of 5 stars`}
     >
       {[1, 2, 3, 4, 5].map((star) => (
         <button
@@ -40,7 +40,7 @@ export default function Stars({ rating = 0, interactive = false, onChange = () =
           } ${
             star <= displayRating ? "text-amber-500" : "text-stone-300"
           }`}
-          aria-label={interactive ? `Donner la note de ${star} sur 5` : undefined}
+          aria-label={interactive ? `Rate ${star} out of 5` : undefined}
         >
           <FontAwesomeIcon icon={faStar} />
         </button>
