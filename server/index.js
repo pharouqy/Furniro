@@ -14,11 +14,12 @@ const app = express();
 
 app.use(cors({
   origin: (origin, cb) => {
-    if (!origin || config.allowedOrigins.some((o) => origin.startsWith(o))) {
-      cb(null, true);
-    } else {
-      cb(null, false);
+    if (!origin) return cb(null, true);
+    if (config.allowedOrigins.some((o) => origin.startsWith(o))) {
+      return cb(null, true);
     }
+    console.warn("CORS: unknown origin", origin, "- set FRONTEND_URL env to allow it");
+    cb(null, true);
   },
   credentials: true,
 }));

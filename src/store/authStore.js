@@ -1,33 +1,39 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { api } from "@/common/utils/api";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "/api";
+
+async function authRequest(path, options = {}) {
+  const res = await fetch(`${BASE_URL}${path}`, {
+    headers: { "Content-Type": "application/json" },
+    ...options,
+  });
+  const text = await res.text();
+  const data = text ? JSON.parse(text) : {};
+  if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
+  return data;
+}
 
 export const useAuthStore = create(
   persist(
-    (set, get) => ({
+    (set) => ({
       token: null,
       user: null,
 
       login: async (email, password) => {
-        const res = await fetch("/api/auth/login", {
+        const data = await authRequest("/auth/login", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password }),
         });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Login failed");
         set({ token: data.token, user: data.user });
         return data;
       },
 
       register: async (name, email, password) => {
-        const res = await fetch("/api/auth/register", {
+        const data = await authRequest("/auth/register", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, email, password }),
         });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Registration failed");
         set({ token: data.token, user: data.user });
         return data;
       },

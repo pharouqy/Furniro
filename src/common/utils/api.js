@@ -14,6 +14,8 @@ async function request(path, options = {}) {
   return data;
 }
 
+export { BASE_URL };
+
 export const api = {
   getProducts: () => request("/products"),
 
