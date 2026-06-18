@@ -41,7 +41,8 @@ export default function AdminDashboard() {
       const res = await fetch(`/api/orders?${params}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      const data = await res.json();
+      const txt = await res.text();
+      const data = txt ? JSON.parse(txt) : {};
       if (!res.ok) throw new Error(data.error);
       setOrders(data.orders);
       setTotal(data.total);
@@ -67,7 +68,8 @@ export default function AdminDashboard() {
         },
         body: JSON.stringify({ status: newStatus }),
       });
-      const data = await res.json();
+      const txt = await res.text();
+      const data = txt ? JSON.parse(txt) : {};
       if (!res.ok) throw new Error(data.error);
       setOrders((prev) =>
         prev.map((o) => (o.id === orderId ? { ...o, status: newStatus } : o))
@@ -86,7 +88,8 @@ export default function AdminDashboard() {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
-      const data = await res.json();
+      const txt = await res.text();
+      const data = txt ? JSON.parse(txt) : {};
       if (!res.ok) throw new Error(data.error);
       setOrders((prev) => prev.filter((o) => o.id !== orderId));
     } catch (err) {

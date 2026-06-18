@@ -6,7 +6,8 @@ async function request(path, options = {}) {
     headers: { "Content-Type": "application/json", ...options.headers },
     ...options,
   });
-  const data = await res.json();
+  const text = await res.text();
+  const data = text ? JSON.parse(text) : {};
   if (!res.ok) {
     throw new Error(data.error || `Request failed (${res.status})`);
   }
