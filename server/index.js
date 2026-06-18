@@ -12,7 +12,16 @@ import authRouter from "./routes/auth.js";
 
 const app = express();
 
-app.use(cors({ origin: config.frontendUrl, credentials: true }));
+app.use(cors({
+  origin: (origin, cb) => {
+    if (!origin || config.allowedOrigins.some((o) => origin.startsWith(o))) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+    }
+  },
+  credentials: true,
+}));
 
 app.post(
   "/api/webhooks/chargily",
