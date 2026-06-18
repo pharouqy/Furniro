@@ -8,6 +8,8 @@ import {
 import { useAuthStore } from "@/store/authStore";
 import { api } from "@/common/utils/api";
 
+const API_BASE = import.meta.env.VITE_API_URL || "/api";
+
 const STATUSES = ["pending", "paid", "processing", "shipped", "delivered", "cancelled"];
 
 const BADGE = {
@@ -38,7 +40,7 @@ export default function AdminDashboard() {
     try {
       const params = new URLSearchParams({ page, limit });
       if (filterStatus) params.set("status", filterStatus);
-      const res = await fetch(`/api/orders?${params}`, {
+      const res = await fetch(`${API_BASE}/orders?${params}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const txt = await res.text();
@@ -60,7 +62,7 @@ export default function AdminDashboard() {
   const handleStatusChange = async (orderId, newStatus) => {
     setUpdatingId(orderId);
     try {
-      const res = await fetch(`/api/orders/${orderId}/status`, {
+      const res = await fetch(`${API_BASE}/orders/${orderId}/status`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -84,7 +86,7 @@ export default function AdminDashboard() {
   const handleDelete = async (orderId) => {
     if (!window.confirm("Delete this order permanently?")) return;
     try {
-      const res = await fetch(`/api/orders/${orderId}`, {
+      const res = await fetch(`${API_BASE}/orders/${orderId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
