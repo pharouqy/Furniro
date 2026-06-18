@@ -1,7 +1,7 @@
 import "dotenv/config";
 
 function parseOrigins(raw) {
-  if (!raw) return ["http://localhost:5173"];
+  if (!raw) return ["https://furniro-iota-ten.vercel.app"];
   return raw.split(",").map((s) => s.trim()).filter(Boolean);
 }
 
