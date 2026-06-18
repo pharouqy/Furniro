@@ -32,7 +32,7 @@ export default function Form({ formData = {}, onChange = () => {}, errors = {} }
         <h2 className="mt-2 text-3xl font-extrabold text-stone-950">Billing Details</h2>
       </div>
 
-      <div className="grid gap-5 rounded-lg border border-stone-200 bg-white p-6 shadow-sm md:p-8">
+      <div className="grid gap-5 rounded-2xl border border-neutral-100 bg-white p-6 shadow-subtle md:p-8">
         <div className="grid gap-5 sm:grid-cols-2">
           <Field id="firstName" label="First Name" required error={errors.firstName}>
             <input

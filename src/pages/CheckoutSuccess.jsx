@@ -28,7 +28,7 @@ export default function CheckoutSuccess() {
   }, [orderId]);
 
   return (
-    <main className="flex min-h-[70vh] items-center bg-[#fffdfa]">
+    <main className="flex min-h-[70vh] items-center bg-[#fbfbf9]">
       <section className="container-page text-center">
         <span className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-emerald-100 text-4xl text-emerald-600">
           <FontAwesomeIcon icon={faCircleCheck} />

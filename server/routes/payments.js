@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { ChargilyClient } from "@chargily/chargily-pay";
-import db from "../db.js";
+import Order from "../models/Order.js";
 import { config } from "../config.js";
 
 const router = Router();
@@ -38,8 +38,7 @@ router.post("/create-checkout", async (req, res, next) => {
       metadata: { order_id: orderId },
     });
 
-    db.prepare("UPDATE orders SET chargily_checkout_id = ? WHERE id = ?")
-      .run(checkout.id, orderId);
+    await Order.findByIdAndUpdate(orderId, { chargily_checkout_id: checkout.id });
 
     res.json({
       checkoutUrl: checkout.checkout_url,
@@ -50,15 +49,16 @@ router.post("/create-checkout", async (req, res, next) => {
   }
 });
 
-router.get("/check-status/:orderId", (req, res) => {
-  const order = db.prepare("SELECT id, status FROM orders WHERE id = ?")
-    .get(req.params.orderId);
-
-  if (!order) {
-    return res.status(404).json({ error: "Order not found" });
+router.get("/check-status/:orderId", async (req, res, next) => {
+  try {
+    const order = await Order.findById(req.params.orderId, "status");
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+    res.json({ status: order.status });
+  } catch (err) {
+    next(err);
   }
-
-  res.json({ status: order.status });
 });
 
 export default router;

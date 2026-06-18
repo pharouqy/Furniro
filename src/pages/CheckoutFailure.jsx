@@ -7,7 +7,7 @@ export default function CheckoutFailure() {
   const orderId = searchParams.get("order_id");
 
   return (
-    <main className="flex min-h-[70vh] items-center bg-[#fffdfa]">
+    <main className="flex min-h-[70vh] items-center bg-[#fbfbf9]">
       <section className="container-page text-center">
         <span className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-red-100 text-4xl text-red-500">
           <FontAwesomeIcon icon={faCircleXmark} />

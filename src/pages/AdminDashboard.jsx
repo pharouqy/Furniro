@@ -104,7 +104,7 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-[#f5f2ed]">
       <header className="sticky top-0 z-40 border-b border-stone-200 bg-white/95 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
+        <div className="container-page flex h-16 items-center justify-between">
           <div className="flex items-center gap-3">
             <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#B88E2F] text-sm font-bold text-white">
               F
@@ -121,7 +121,7 @@ export default function AdminDashboard() {
         </div>
       </header>
 
-      <div className="mx-auto max-w-7xl px-5 py-8">
+      <div className="container-page py-8">
         <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 className="text-2xl font-extrabold text-stone-950">Orders</h2>

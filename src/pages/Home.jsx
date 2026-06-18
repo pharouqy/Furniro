@@ -44,28 +44,29 @@ export default function Home() {
   );
 
   return (
-    <main className="w-full">
+    <main className="w-full bg-[#fbfbf9]">
+      {/* Hero Section */}
       <section
-        className="relative flex min-h-[560px] items-center overflow-hidden bg-cover bg-center md:min-h-[640px]"
+        className="relative flex min-h-[600px] items-center overflow-hidden bg-cover bg-center md:min-h-[720px] lg:min-h-[800px]"
         style={{ backgroundImage: `url(${livingRoomHero})` }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-stone-950/75 via-stone-950/35 to-transparent" />
-        <div className="container-page relative z-10 py-20 text-white">
-          <div className="max-w-2xl animate-fade-in">
-            <p className="eyebrow text-white/80">New arrival</p>
-            <h1 className="mt-4 text-5xl font-extrabold leading-[1.05] tracking-tight md:text-7xl">
-              Furniro
+        <div className="absolute inset-0 bg-black/20" />
+        <div className="container-page relative z-10 py-16 flex justify-end md:py-20">
+          <div className="w-full max-w-lg rounded-3xl bg-[#FDF9F3]/95 p-8 shadow-[0_30px_70px_rgba(184,142,47,0.15)] backdrop-blur-md border border-white/60 text-neutral-900 md:p-10 lg:max-w-xl lg:p-12 animate-fade-in">
+            <p className="eyebrow text-[#b88e2f] font-bold">New Arrival</p>
+            <h1 className="mt-4 text-4xl font-black leading-tight tracking-tight text-neutral-900 md:text-5xl lg:text-6xl">
+              Discover Our New Collection
             </h1>
-            <p className="mt-5 max-w-xl text-base leading-8 text-white/85 md:text-lg">
-              Warm modern furniture for rooms that work beautifully every day.
-              Discover balanced pieces, natural textures, and effortless delivery.
+            <p className="mt-6 text-sm leading-8 text-neutral-600 md:text-base">
+              Warm modern furniture for spaces that work beautifully every day.
+              Crafted with premium materials, balanced textures, and effortless utility.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-10 flex flex-wrap gap-4">
               <Link to="/shop" className="btn-primary">
                 Shop Collection
                 <FontAwesomeIcon icon={faArrowRightLong} />
               </Link>
-              <a href="#rooms" className="btn-secondary border-white/80 text-white hover:bg-white hover:text-stone-950">
+              <a href="#rooms" className="btn-secondary">
                 Browse Rooms
               </a>
             </div>
@@ -73,34 +74,36 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="rooms" className="container-page py-16 md:py-20">
-        <div className="mb-8 text-center">
+      {/* Rooms Section */}
+      <section id="rooms" className="container-page py-20 md:py-28">
+        <div className="mb-12 text-center">
           <p className="eyebrow">Rooms</p>
-          <h2 className="section-heading mt-2">Browse the range</h2>
-          <p className="section-copy mx-auto mt-3">
-            Start from the room you are styling and find pieces that feel collected, not crowded.
+          <h2 className="section-heading mt-3">Browse the range</h2>
+          <p className="section-copy mx-auto mt-4">
+            Start from the room you are styling and find balanced pieces that feel curated and purposeful.
           </p>
         </div>
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 sm:gap-8 lg:gap-10">
           <ContentHome living={dining} text="Dining Room" />
           <ContentHome living={living} text="Living Room" />
           <ContentHome living={bedroom} text="Bedroom" />
         </div>
       </section>
 
-      <section className="bg-white py-16 md:py-20">
+      {/* Selected Pieces / Products Section */}
+      <section className="bg-white py-20 md:py-28 border-y border-neutral-100">
         <div className="container-page">
-          <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="eyebrow">Selected pieces</p>
-              <h2 className="section-heading mt-2">Our Products</h2>
+              <h2 className="section-heading mt-3">Our Products</h2>
             </div>
             <Link to="/shop" className="btn-secondary w-fit">
-              View All
+              View All Products
               <FontAwesomeIcon icon={faArrowRightLong} />
             </Link>
           </div>
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-4 lg:gap-10">
             {products.map((product) => (
               <ProductCard
                 key={product.id}
@@ -116,28 +119,29 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-[#F7F1E8] py-16 md:py-20">
-        <div className="container-page grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-          <div>
+      {/* Inspiration Section */}
+      <section className="bg-[#fcf9f4] py-20 md:py-28">
+        <div className="container-page grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+          <div className="flex flex-col items-start">
             <p className="eyebrow">Inspiration</p>
-            <h2 className="section-heading mt-2">50+ beautiful rooms inspiration</h2>
-            <p className="section-copy mt-4">
-              Explore complete room ideas built around proportion, comfort, and materials that age well.
+            <h2 className="section-heading mt-3">50+ beautiful rooms inspiration</h2>
+            <p className="section-copy mt-5">
+              Explore complete interior designs built around proportion, comfort, and sustainable materials that age beautifully.
             </p>
-            <Link to="/shop" className="btn-primary mt-7">
-              Explore More
+            <Link to="/shop" className="btn-primary mt-8">
+              Explore More Designs
             </Link>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-[1fr_0.9fr]">
-            <div className="relative min-h-[420px] overflow-hidden rounded-lg">
-              <img src={frameworks} alt="Calm bedroom inspiration" className="h-full w-full object-cover" />
-              <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between rounded-lg bg-white/90 p-5 backdrop-blur">
+          <div className="grid gap-6 md:grid-cols-[1fr_0.9fr] md:gap-8">
+            <div className="relative min-h-[460px] overflow-hidden rounded-2xl shadow-lg group">
+              <img src={frameworks} alt="Calm bedroom inspiration" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+              <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between rounded-2xl bg-white/95 p-6 shadow-md backdrop-blur-md border border-white/50">
                 <div>
-                  <span className="text-xs font-semibold text-stone-500">01 / Bedroom</span>
-                  <h3 className="mt-1 text-xl font-bold text-stone-950">Inner Peace</h3>
+                  <span className="text-xs font-bold text-neutral-400 uppercase tracking-widest">01 / Bedroom</span>
+                  <h3 className="mt-1 text-xl font-extrabold text-neutral-900">Inner Peace</h3>
                 </div>
-                <Link to="/shop" className="flex h-11 w-11 items-center justify-center rounded-md bg-[#B88E2F] text-white transition-colors hover:bg-[#8f6b1f]" aria-label="Shop bedroom inspiration">
+                <Link to="/shop" className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#B88E2F] text-white transition-all hover:bg-[#8f6b1f] hover:translate-y-[-2px] shadow-sm" aria-label="Shop bedroom inspiration">
                   <FontAwesomeIcon icon={faArrowRightLong} />
                 </Link>
               </div>
@@ -147,10 +151,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="container-page py-16 text-center md:py-20">
+      {/* Share setup Section */}
+      <section className="container-page py-20 text-center md:py-28">
         <p className="eyebrow">Share your setup</p>
-        <h2 className="section-heading mt-2">#FurniroFurniture</h2>
-        <div className="mt-8 overflow-hidden rounded-lg">
+        <h2 className="section-heading mt-3">#FurniroFurniture</h2>
+        <div className="mt-12 overflow-hidden rounded-2xl border border-neutral-100 bg-white p-4 shadow-subtle">
           <GridSection
             house1={house1}
             house2={house2}

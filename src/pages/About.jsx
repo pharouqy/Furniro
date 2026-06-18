@@ -13,10 +13,10 @@ function About() {
   ];
 
   return (
-    <main className="bg-[#fffdfa]">
+    <main className="bg-[#fbfbf9]">
       <Banner title="About" bgImage={shopBanner} breadcrumbs={[{ label: "About" }]} />
 
-      <section className="container-page grid gap-10 py-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+      <section className="container-page grid gap-10 py-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:py-24">
         <div>
           <p className="eyebrow">Our approach</p>
           <h1 className="section-heading mt-2">Furniture that makes a room easier to live in.</h1>
@@ -32,7 +32,7 @@ function About() {
         </div>
       </section>
 
-      <section className="bg-white py-14">
+      <section className="bg-white py-16">
         <div className="container-page grid gap-5 md:grid-cols-3">
           {values.map((value) => (
             <article key={value.title} className="rounded-lg border border-stone-200 p-6">

@@ -18,7 +18,7 @@ export default function OffCart({ isOpen, setIsOpen }) {
         aria-label="Close cart overlay"
       />
 
-      <aside className="animate-slide-in absolute inset-y-0 right-0 flex w-full max-w-md flex-col bg-white shadow-2xl">
+      <aside className="animate-slide-in absolute inset-y-0 right-0 flex w-full max-w-lg flex-col bg-white shadow-2xl">
         <div className="flex items-center justify-between border-b border-stone-200 p-6">
           <div>
             <p className="eyebrow">Furniro</p>

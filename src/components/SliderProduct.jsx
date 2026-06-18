@@ -14,13 +14,13 @@ export default function SliderProduct({ images = [] }) {
   }, [images]);
 
   return (
-    <div className="grid w-full gap-4 md:grid-cols-[88px_1fr]">
-      <div className="flex gap-3 overflow-x-auto md:flex-col md:overflow-visible">
+    <div className="flex w-full flex-col gap-4 md:grid md:grid-cols-[88px_1fr]">
+      <div className="order-2 flex gap-3 md:order-1 md:flex-col">
         {list.map((img, idx) => (
           <button
             key={img}
             onClick={() => setActiveIndex(idx)}
-            className={`h-20 w-20 shrink-0 overflow-hidden rounded-lg border-2 bg-stone-100 transition-all ${
+            className={`h-16 w-16 shrink-0 overflow-hidden rounded-lg border-2 bg-stone-100 transition-all md:h-20 md:w-20 ${
               activeIndex === idx ? "border-[#B88E2F]" : "border-transparent opacity-70 hover:opacity-100"
             }`}
             aria-label={`Show product image ${idx + 1}`}
@@ -30,7 +30,7 @@ export default function SliderProduct({ images = [] }) {
         ))}
       </div>
 
-      <div className="aspect-square overflow-hidden rounded-lg bg-[#EEF4EF] md:aspect-[5/4]">
+      <div className="order-1 aspect-square overflow-hidden rounded-lg bg-[#EEF4EF] md:order-2 md:aspect-[5/4]">
         <img
           src={list[activeIndex] || list[0]}
           alt="Product detail"

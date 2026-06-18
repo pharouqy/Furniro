@@ -1,15 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap");
 @import "tailwindcss";
 
 :root {
   --brand: #b88e2f;
+  --brand-light: #dfcbb5;
   --brand-dark: #8f6b1f;
-  --ink: #1f2933;
-  --muted: #6b7280;
-  --line: #e7e3da;
-  --paper: #fffdfa;
-  --sand: #f7f1e8;
-  --sage: #eef4ef;
-  --clay: #c76543;
+  --ink: #111827;
+  --muted: #4b5563;
+  --line: #f3f4f6;
+  --paper: #fbfbf9;
+  --sand: #fcf9f4;
+  --sage: #e8eef3;
+  --clay: #dd6b20;
+  
+  /* Modern shadows */
+  --shadow-subtle: 0 4px 20px -2px rgba(17, 24, 39, 0.04);
+  --shadow-elegant: 0 20px 40px -15px rgba(184, 142, 47, 0.12);
+  --shadow-card: 0 10px 30px -10px rgba(17, 24, 39, 0.06);
 }
 
 * {
@@ -23,17 +30,28 @@ html {
 }
 
 body {
-  font-family: "Poppins", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-weight: 400;
   color: var(--ink);
   background: var(--paper);
-  line-height: 1.6;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Outfit", sans-serif;
+  letter-spacing: -0.02em;
+}
+
 a {
   text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button {
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 button,
@@ -57,16 +75,16 @@ textarea:focus-visible {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f4f1ec;
+  background: #f7f6f2;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c8c0b4;
-  border-radius: 4px;
+  background: #dcd7ce;
+  border-radius: 8px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #9c9080;
+  background: #b8b0a2;
 }
 
 input[type="number"]::-webkit-outer-spin-button,
@@ -82,7 +100,7 @@ input[type="number"] {
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(24px);
   }
   to {
     opacity: 1;
@@ -91,7 +109,7 @@ input[type="number"] {
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
+  animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes slideInRight {
@@ -106,35 +124,36 @@ input[type="number"] {
 }
 
 .animate-slide-in {
-  animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slideInRight 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @layer components {
   .container-page {
-    @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8;
+    @apply mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-12;
   }
 
   .eyebrow {
-    @apply text-xs font-bold uppercase tracking-[0.18em] text-[#8f6b1f];
+    @apply text-[11px] font-bold uppercase tracking-[0.25em] text-[#b88e2f];
   }
 
   .section-heading {
-    @apply text-3xl font-bold leading-tight text-stone-950 md:text-4xl;
+    @apply text-3xl font-extrabold leading-tight text-neutral-900 md:text-5xl tracking-tight;
   }
 
   .section-copy {
-    @apply max-w-2xl text-sm leading-7 text-stone-600 md:text-base;
+    @apply max-w-3xl text-sm leading-8 text-neutral-500 md:text-base;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-md bg-[#B88E2F] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#8f6b1f];
+    @apply inline-flex items-center justify-center gap-2.5 rounded-full bg-[#B88E2F] px-8 py-3.5 text-sm font-semibold text-white shadow-md transition-all hover:bg-[#8f6b1f] hover:translate-y-[-2px] hover:shadow-lg active:translate-y-[0px] cursor-pointer;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-md border border-stone-900 px-6 py-3 text-sm font-bold text-stone-950 transition-colors hover:bg-stone-950 hover:text-white;
+    @apply inline-flex items-center justify-center gap-2.5 rounded-full border border-neutral-300 bg-white px-8 py-3.5 text-sm font-semibold text-neutral-800 transition-all hover:border-neutral-900 hover:bg-neutral-900 hover:text-white hover:translate-y-[-2px] cursor-pointer;
   }
 
   .field-control {
-    @apply w-full rounded-md border border-stone-200 bg-white px-4 py-3 text-sm text-stone-900 transition-colors placeholder:text-stone-400 focus:border-[#B88E2F] focus:outline-none;
+    @apply w-full rounded-xl border border-neutral-200 bg-white px-5 py-3.5 text-sm text-neutral-900 transition-all placeholder:text-neutral-400 focus:border-[#B88E2F] focus:ring-2 focus:ring-[#B88E2F]/15 focus:outline-none;
   }
 }
+

@@ -74,40 +74,40 @@ export default function SingleProduct() {
         breadcrumbs={[{ label: "Shop", path: "/shop" }, { label: product.title }]}
       />
 
-      <section className="container-page grid gap-10 py-12 lg:grid-cols-[1fr_0.9fr] lg:py-16">
+      <section className="container-page grid gap-16 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:py-24">
         <SliderProduct images={productImages} />
 
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-8">
           <div>
             <p className="eyebrow">Furniro seating</p>
-            <h1 className="mt-2 text-4xl font-extrabold leading-tight text-stone-950 md:text-5xl">
+            <h1 className="mt-3 text-4xl font-black leading-tight text-neutral-900 md:text-5xl">
               {product.title}
             </h1>
-            <p className="mt-3 text-2xl font-bold text-[#8F6B1F]">
+            <p className="mt-4 text-3xl font-black text-[#8F6B1F]">
               {product.price.toLocaleString("fr-FR")} Da
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 text-sm text-stone-500">
+          <div className="flex flex-wrap items-center gap-4 text-sm text-neutral-500">
             <Stars rating={4} />
-            <span className="h-4 w-px bg-stone-200" />
-            <span>5 customer reviews</span>
+            <span className="h-4 w-px bg-neutral-200" />
+            <span className="font-medium">5 customer reviews</span>
           </div>
 
-          <p className="section-copy">{product.description} Premium upholstery, a solid frame, and balanced proportions make it easy to style in both compact and generous spaces.</p>
+          <p className="section-copy leading-relaxed">{product.description} Premium upholstery, a solid hardwood frame, and balanced proportions make it easy to style in both compact and generous spaces.</p>
 
-          <div className="grid gap-5 rounded-lg border border-stone-200 bg-white p-5">
+          <div className="grid gap-6 rounded-2xl border border-neutral-100 bg-white p-6 shadow-subtle">
             <div>
-              <h3 className="text-sm font-bold text-stone-950">Size</h3>
-              <div className="mt-3 flex flex-wrap gap-2">
+              <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-widest">Size</h3>
+              <div className="mt-3 flex flex-wrap gap-2.5">
                 {["XS", "S", "M", "L", "XL"].map((size) => (
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}
-                    className={`h-10 min-w-10 rounded-md border px-3 text-sm font-bold transition-colors ${
+                    className={`h-11 min-w-11 rounded-xl border px-4 text-xs font-extrabold transition-all duration-300 ${
                       selectedSize === size
-                        ? "border-[#B88E2F] bg-[#B88E2F] text-white"
-                        : "border-stone-200 bg-white text-stone-700 hover:border-[#B88E2F]"
+                        ? "border-[#B88E2F] bg-[#B88E2F] text-white shadow-sm"
+                        : "border-neutral-200 bg-white text-neutral-700 hover:border-[#B88E2F]"
                     }`}
                   >
                     {size}
@@ -117,14 +117,16 @@ export default function SingleProduct() {
             </div>
 
             <div>
-              <h3 className="text-sm font-bold text-stone-950">Color</h3>
-              <div className="mt-3 flex flex-wrap gap-3">
+              <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-widest">Color</h3>
+              <div className="mt-3 flex flex-wrap gap-3.5">
                 {colorOptions.map((color) => (
                   <button
                     key={color.name}
                     onClick={() => setSelectedColor(color.name)}
-                    className={`h-9 w-9 rounded-full border-2 ${color.className} ${
-                      selectedColor === color.name ? "border-stone-950 ring-2 ring-stone-200" : "border-white"
+                    className={`h-10 w-10 rounded-full border-2 transition-all duration-300 ${color.className} ${
+                      selectedColor === color.name
+                        ? "border-white ring-2 ring-[#B88E2F] scale-105"
+                        : "border-white hover:scale-105"
                     }`}
                     aria-label={color.label}
                   />
@@ -133,10 +135,10 @@ export default function SingleProduct() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <div className="flex h-12 w-full items-center justify-between rounded-md border border-stone-200 bg-white sm:w-36">
+          <div className="flex flex-col gap-4 sm:flex-row">
+            <div className="flex h-14 w-full items-center justify-between rounded-xl border border-neutral-200 bg-white px-2 sm:w-36 shadow-sm">
               <button
-                className="h-full px-4 text-lg font-bold text-stone-600 hover:text-stone-950"
+                className="h-full px-3 text-lg font-bold text-neutral-500 hover:text-neutral-900 transition-colors"
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
                 aria-label="Decrease quantity"
               >
@@ -145,13 +147,13 @@ export default function SingleProduct() {
               <input
                 type="number"
                 aria-label="Quantity"
-                className="w-12 bg-transparent text-center text-sm font-bold focus:outline-none"
+                className="w-12 bg-transparent text-center text-sm font-bold text-neutral-800 focus:outline-none"
                 value={quantity}
                 min="1"
                 onChange={(e) => setQuantity(Math.max(1, Number(e.target.value) || 1))}
               />
               <button
-                className="h-full px-4 text-lg font-bold text-stone-600 hover:text-stone-950"
+                className="h-full px-3 text-lg font-bold text-neutral-500 hover:text-neutral-900 transition-colors"
                 onClick={() => setQuantity(quantity + 1)}
                 aria-label="Increase quantity"
               >
@@ -159,39 +161,39 @@ export default function SingleProduct() {
               </button>
             </div>
 
-            <button onClick={handleAddToCart} className="btn-primary h-12 flex-1">
+            <button onClick={handleAddToCart} className="btn-primary h-14 flex-1 shadow-md hover:shadow-lg">
               Add To Cart
             </button>
             <button
               onClick={() => alert("Comparison feature is coming soon!")}
-              className="btn-secondary h-12"
+              className="btn-secondary h-14"
             >
               Compare
             </button>
           </div>
 
-          <dl className="grid grid-cols-[90px_1fr] gap-x-4 gap-y-2 border-t border-stone-200 pt-6 text-sm text-stone-500">
-            <dt>SKU</dt>
-            <dd>: SS-00{product.id}</dd>
-            <dt>Category</dt>
-            <dd>: Sofas</dd>
-            <dt>Tags</dt>
-            <dd>: Sofa, Chair, Home, Shop</dd>
-            <dt>Share</dt>
-            <dd className="flex items-center gap-3 text-lg text-stone-900">
+          <dl className="grid grid-cols-[90px_1fr] gap-x-4 gap-y-3.5 border-t border-neutral-100 pt-8 text-sm text-neutral-500">
+            <dt className="font-semibold text-neutral-400">SKU</dt>
+            <dd className="font-bold text-neutral-800">: SS-00{product.id}</dd>
+            <dt className="font-semibold text-neutral-400">Category</dt>
+            <dd className="font-bold text-neutral-800">: Sofas</dd>
+            <dt className="font-semibold text-neutral-400">Tags</dt>
+            <dd className="font-bold text-neutral-800">: Sofa, Chair, Home, Shop</dd>
+            <dt className="font-semibold text-neutral-400 flex items-center">Share</dt>
+            <dd className="flex items-center gap-3 text-xl text-neutral-900 font-bold">
               :
-              <button aria-label="Share on Facebook" className="hover:text-[#B88E2F]"><FontAwesomeIcon icon={faSquareFacebook} /></button>
-              <button aria-label="Share on LinkedIn" className="hover:text-[#B88E2F]"><FontAwesomeIcon icon={faSquareLinkedin} /></button>
-              <button aria-label="Share on X" className="hover:text-[#B88E2F]"><FontAwesomeIcon icon={faSquareXTwitter} /></button>
+              <button aria-label="Share on Facebook" className="hover:text-[#B88E2F] hover:translate-y-[-2px] transition-all"><FontAwesomeIcon icon={faSquareFacebook} /></button>
+              <button aria-label="Share on LinkedIn" className="hover:text-[#B88E2F] hover:translate-y-[-2px] transition-all"><FontAwesomeIcon icon={faSquareLinkedin} /></button>
+              <button aria-label="Share on X" className="hover:text-[#B88E2F] hover:translate-y-[-2px] transition-all"><FontAwesomeIcon icon={faSquareXTwitter} /></button>
             </dd>
           </dl>
         </div>
       </section>
 
-      <section className="border-y border-stone-200 bg-white py-12">
+      <section className="border-y border-neutral-100 bg-white py-16">
         <div className="container-page">
           <div className="overflow-x-auto">
-            <nav aria-label="Product information" className="min-w-max border-b border-stone-100">
+            <nav aria-label="Product information" className="min-w-max border-b border-neutral-100 flex gap-8">
               {[
                 { id: "description", label: "Description" },
                 { id: "info", label: "Additional Information" },
@@ -200,8 +202,10 @@ export default function SingleProduct() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`mr-8 border-b-2 px-1 pb-4 text-base font-bold transition-colors ${
-                    activeTab === tab.id ? "border-stone-950 text-stone-950" : "border-transparent text-stone-400 hover:text-stone-700"
+                  className={`border-b-2 px-1 pb-4 text-base font-extrabold transition-all duration-300 ${
+                    activeTab === tab.id
+                      ? "border-neutral-900 text-neutral-900"
+                      : "border-transparent text-neutral-400 hover:text-neutral-600"
                   }`}
                 >
                   {tab.label}
@@ -210,42 +214,42 @@ export default function SingleProduct() {
             </nav>
           </div>
 
-          <div className="py-8 text-sm leading-7 text-stone-600">
+          <div className="py-10 text-sm leading-8 text-neutral-500">
             {activeTab === "description" && (
-              <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-                <p>
-                  Embodying clean lines and modern design, this sofa is wrapped in premium upholstery and set on tapered wooden legs. It is designed for movie nights, long conversations, and relaxed everyday use.
+              <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+                <p className="text-neutral-500 text-sm leading-8">
+                  Embodying clean lines and modern design, this sofa is wrapped in premium upholstery and set on tapered wooden legs. It is designed for cozy movie nights, long conversations, and relaxed everyday use. The thick padded cushions provide soft support that keeps its shape over time.
                 </p>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <img src={couchProduct1} alt="Sofa detail view" className="h-72 w-full rounded-lg object-cover" />
-                  <img src={couchProduct2} alt="Sofa styled in room" className="h-72 w-full rounded-lg object-cover" />
+                <div className="grid gap-6 sm:grid-cols-2">
+                  <img src={couchProduct1} alt="Sofa detail view" className="h-72 w-full rounded-2xl object-cover shadow-sm hover:scale-[1.02] transition-transform duration-500" />
+                  <img src={couchProduct2} alt="Sofa styled in room" className="h-72 w-full rounded-2xl object-cover shadow-sm hover:scale-[1.02] transition-transform duration-500" />
                 </div>
               </div>
             )}
 
             {activeTab === "info" && (
-              <div className="grid gap-3 sm:grid-cols-2">
-                <p><strong>Frame:</strong> Hardwood solid frame with plywood reinforcements.</p>
-                <p><strong>Upholstery:</strong> Premium linen texture upholstery material.</p>
-                <p><strong>Legs:</strong> Natural ash wood legs with protection pads.</p>
-                <p><strong>Comfort:</strong> High density foam cushions for long-lasting support.</p>
+              <div className="grid gap-6 sm:grid-cols-2 bg-neutral-50/50 p-6 rounded-2xl border border-neutral-100">
+                <p><strong className="text-neutral-800 font-bold">Frame:</strong> Hardwood solid frame with plywood reinforcements.</p>
+                <p><strong className="text-neutral-800 font-bold">Upholstery:</strong> Premium linen texture upholstery material.</p>
+                <p><strong className="text-neutral-800 font-bold">Legs:</strong> Natural ash wood legs with protection pads.</p>
+                <p><strong className="text-neutral-800 font-bold">Comfort:</strong> High density foam cushions for long-lasting support.</p>
               </div>
             )}
 
             {activeTab === "reviews" && (
-              <div className="grid gap-4">
+              <div className="grid gap-6">
                 {[
                   { author: "John Doe", rating: 5, date: "June 2, 2026", comment: "Outstanding sofa. Perfect fit for my living room." },
                   { author: "Jane Smith", rating: 4, date: "May 28, 2026", comment: "Very comfortable and easy to assemble." },
                   { author: "Alex Johnson", rating: 5, date: "May 15, 2026", comment: "High quality materials and quick shipping." },
                 ].map((review) => (
-                  <article key={`${review.author}-${review.date}`} className="rounded-lg border border-stone-200 p-5">
+                  <article key={`${review.author}-${review.date}`} className="rounded-2xl border border-neutral-100 p-6 bg-neutral-50/30">
                     <div className="flex flex-wrap items-center gap-3">
-                      <span className="font-bold text-stone-950">{review.author}</span>
+                      <span className="font-extrabold text-neutral-900">{review.author}</span>
                       <Stars rating={review.rating} />
-                      <span className="text-xs text-stone-400">{review.date}</span>
+                      <span className="text-xs text-neutral-400 font-medium">{review.date}</span>
                     </div>
-                    <p className="mt-3">{review.comment}</p>
+                    <p className="mt-4 text-neutral-600 leading-relaxed">{review.comment}</p>
                   </article>
                 ))}
               </div>
@@ -254,15 +258,15 @@ export default function SingleProduct() {
         </div>
       </section>
 
-      <section className="container-page py-14">
-        <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+      <section className="container-page py-16 lg:py-24">
+        <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="eyebrow">More to love</p>
-            <h2 className="section-heading mt-2">Related Products</h2>
+            <h2 className="section-heading mt-3">Related Products</h2>
           </div>
           <Link to="/shop" className="btn-secondary w-fit">Back to Shop</Link>
         </div>
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-4 lg:gap-10">
           {[1, 2, 3, 4].map((itemIndex) => (
             <ProductCard
               key={itemIndex}

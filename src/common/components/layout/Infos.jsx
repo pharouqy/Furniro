@@ -10,7 +10,7 @@ export default function Infos() {
   ];
 
   return (
-    <section className="w-full bg-[#EEF4EF] py-10" aria-label="Service promises">
+    <section className="w-full bg-[#EEF4EF] py-10 md:py-12" aria-label="Service promises">
       <div className="container-page grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {items.map((item) => (
           <div key={item.title} className="flex items-center gap-4 rounded-lg bg-white/70 p-5">

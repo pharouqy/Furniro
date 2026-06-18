@@ -19,10 +19,10 @@ function Contact() {
   };
 
   return (
-    <main className="bg-[#fffdfa]">
+    <main className="bg-[#fbfbf9]">
       <Banner title="Contact" bgImage={shopBanner} breadcrumbs={[{ label: "Contact" }]} />
 
-      <section className="container-page py-16">
+      <section className="container-page py-16 lg:py-24">
         <div className="mx-auto mb-10 max-w-2xl text-center">
           <p className="eyebrow">Get in touch</p>
           <h1 className="section-heading mt-2">We are here to help.</h1>

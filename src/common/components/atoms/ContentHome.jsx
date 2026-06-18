@@ -1,7 +1,7 @@
 export default function ContentHome({ living, text }) {
   return (
     <article className="group cursor-pointer">
-      <div className="relative h-[360px] overflow-hidden rounded-lg bg-stone-100 shadow-sm">
+      <div className="relative h-[280px] overflow-hidden rounded-lg bg-stone-100 shadow-sm md:h-[360px]">
         <img
           src={living}
           alt={text}

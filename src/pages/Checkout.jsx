@@ -129,38 +129,38 @@ export default function Checkout() {
   ];
 
   return (
-    <main className="bg-[#fffdfa]">
+    <main className="bg-[#fbfbf9]">
       <Banner
         title="Checkout"
         bgImage={shopBanner}
         breadcrumbs={[{ label: "Shop", path: "/shop" }, { label: "Checkout" }]}
       />
 
-      <section className="container-page grid gap-10 py-12 lg:grid-cols-[1fr_440px] lg:items-start lg:py-16">
+      <section className="container-page grid gap-12 py-16 lg:grid-cols-[1fr_460px] lg:items-start lg:py-24">
         <Form formData={formData} onChange={handleFormChange} errors={errors} />
 
-        <aside className="sticky top-24 rounded-lg border border-stone-200 bg-white p-6 shadow-sm">
-          <div className="flex items-center justify-between border-b border-stone-200 pb-4">
-            <h2 className="text-2xl font-extrabold text-stone-950">Order Summary</h2>
-            <span className="text-sm font-semibold text-stone-500">{items.length} items</span>
+        <aside className="sticky top-28 rounded-3xl border border-neutral-100 bg-[#FDF9F3] p-8 shadow-[0_20px_50px_rgba(184,142,47,0.08)]">
+          <div className="flex items-center justify-between border-b border-neutral-200/60 pb-5">
+            <h2 className="text-2xl font-black text-neutral-900">Order Summary</h2>
+            <span className="text-xs font-bold text-neutral-450 uppercase tracking-widest">{items.length} items</span>
           </div>
 
           {items.length === 0 ? (
-            <p className="py-8 text-center text-sm text-stone-500">Your cart is empty.</p>
+            <p className="py-12 text-center text-sm text-neutral-500">Your cart is empty.</p>
           ) : (
-            <div className="divide-y divide-stone-100">
+            <div className="divide-y divide-neutral-100 max-h-96 overflow-y-auto pr-2 my-2">
               {items.map((item) => (
-                <div key={item.variantId} className="flex gap-4 py-4">
-                  <img src={item.picture} alt={item.title} className="h-16 w-16 rounded-md object-cover" />
+                <div key={item.variantId} className="flex gap-4 py-5">
+                  <img src={item.picture} alt={item.title} className="h-16 w-16 rounded-xl object-cover shadow-sm bg-white" />
                   <div className="min-w-0 flex-1">
-                    <p className="truncate font-bold text-stone-950">{item.title}</p>
-                    <p className="mt-1 text-xs text-stone-500">
+                    <p className="truncate font-extrabold text-neutral-900 text-sm">{item.title}</p>
+                    <p className="mt-1 text-xs text-[#b88e2f] font-bold">
                       Qty {item.quantity}
                       {item.size && ` / ${item.size}`}
                       {item.color && ` / ${item.color}`}
                     </p>
                   </div>
-                  <span className="text-sm font-semibold text-stone-700">
+                  <span className="text-sm font-bold text-neutral-800">
                     {(item.price * item.quantity).toLocaleString("fr-FR")} Da
                   </span>
                 </div>
@@ -168,28 +168,30 @@ export default function Checkout() {
             </div>
           )}
 
-          <div className="space-y-3 border-t border-stone-200 pt-5 text-sm">
-            <div className="flex justify-between text-stone-600">
+          <div className="space-y-4 border-t border-neutral-200/60 pt-6 text-sm">
+            <div className="flex justify-between text-neutral-600 font-semibold">
               <span>Subtotal</span>
               <span>{totalPrice.toLocaleString("fr-FR")} Da</span>
             </div>
-            <div className="flex justify-between text-stone-600">
+            <div className="flex justify-between text-neutral-600 font-semibold">
               <span>Shipping</span>
               <span className="font-bold text-emerald-700">Free</span>
             </div>
-            <div className="flex justify-between border-t border-stone-200 pt-4 text-lg font-extrabold text-stone-950">
+            <div className="flex justify-between border-t border-neutral-200/60 pt-5 text-lg font-black text-neutral-900">
               <span>Total</span>
-              <span className="text-[#8F6B1F]">{totalPrice.toLocaleString("fr-FR")} Da</span>
+              <span className="text-2xl text-[#8F6B1F]">{totalPrice.toLocaleString("fr-FR")} Da</span>
             </div>
           </div>
 
-          <fieldset className="mt-6 space-y-3">
-            <legend className="mb-3 text-sm font-bold text-stone-950">Payment Method</legend>
+          <fieldset className="mt-8 space-y-4">
+            <legend className="mb-4 text-xs font-bold text-neutral-400 uppercase tracking-widest">Payment Method</legend>
             {paymentMethods.map((method) => (
               <label
                 key={method.id}
-                className={`block rounded-lg border p-4 transition-colors ${
-                  selectedMethod === method.id ? "border-[#B88E2F] bg-[#F7F1E8]" : "border-stone-200 bg-white hover:border-stone-300"
+                className={`block rounded-2xl border p-5 transition-all duration-300 cursor-pointer ${
+                  selectedMethod === method.id 
+                    ? "border-[#B88E2F] bg-white shadow-sm" 
+                    : "border-neutral-200 bg-white hover:border-neutral-300"
                 }`}
               >
                 <span className="flex items-center gap-3">
@@ -197,24 +199,24 @@ export default function Checkout() {
                     type="radio"
                     name="paymentMethod"
                     value={method.id}
-                    className="h-4 w-4 accent-[#B88E2F]"
+                    className="h-4.5 w-4.5 accent-[#B88E2F] cursor-pointer"
                     checked={selectedMethod === method.id}
                     onChange={(e) => setSelectedMethod(e.target.value)}
                   />
-                  <span className="text-sm font-bold text-stone-900">{method.label}</span>
+                  <span className="text-sm font-extrabold text-neutral-900">{method.label}</span>
                 </span>
                 {selectedMethod === method.id && (
-                  <span className="mt-2 block pl-7 text-xs leading-6 text-stone-500">{method.description}</span>
+                  <span className="mt-3 block pl-7 text-xs leading-6 text-neutral-500 transition-all duration-300">{method.description}</span>
                 )}
               </label>
             ))}
           </fieldset>
 
-          <p className="mt-5 text-xs leading-6 text-stone-500">
+          <p className="mt-6 text-xs leading-6 text-neutral-450 font-medium">
             Your personal data will be used to process your order and support your experience on this website.
           </p>
 
-          <button onClick={handlePlaceOrder} disabled={submitting} className="btn-primary mt-6 w-full disabled:cursor-not-allowed disabled:opacity-60">
+          <button onClick={handlePlaceOrder} disabled={submitting} className="btn-primary mt-8 w-full shadow-md hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60">
             {submitting ? "Processing..." : "Place Order"}
           </button>
         </aside>

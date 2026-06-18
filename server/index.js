@@ -2,12 +2,13 @@ import express from "express";
 import cors from "cors";
 import { verifySignature } from "@chargily/chargily-pay";
 import { config } from "./config.js";
+import { connectDB } from "./db.js";
+import Order from "./models/Order.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import productsRouter from "./routes/products.js";
 import ordersRouter from "./routes/orders.js";
 import paymentsRouter from "./routes/payments.js";
 import authRouter from "./routes/auth.js";
-import db from "./db.js";
 
 const app = express();
 
@@ -16,7 +17,7 @@ app.use(cors({ origin: config.frontendUrl, credentials: true }));
 app.post(
   "/api/webhooks/chargily",
   express.raw({ type: "application/json" }),
-  (req, res) => {
+  async (req, res) => {
     const signature = req.get("signature") || "";
     const payload = req.body;
 
@@ -35,9 +36,10 @@ app.post(
       const checkoutId = event?.data?.id;
 
       if (event.type === "checkout.paid" && checkoutId) {
-        db.prepare(
-          "UPDATE orders SET status = 'paid', updated_at = datetime('now') WHERE chargily_checkout_id = ?"
-        ).run(checkoutId);
+        await Order.findOneAndUpdate(
+          { chargily_checkout_id: checkoutId },
+          { status: "paid" }
+        );
         console.log(`Order paid for checkout ${checkoutId}`);
       }
 
@@ -62,6 +64,8 @@ app.use("/api/payments", paymentsRouter);
 
 app.use(errorHandler);
 
-app.listen(config.port, () => {
-  console.log(`Furniro API running on http://localhost:${config.port}`);
+connectDB().then(() => {
+  app.listen(config.port, () => {
+    console.log(`Furniro API running on http://localhost:${config.port}`);
+  });
 });

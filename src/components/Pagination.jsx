@@ -1,6 +1,6 @@
 function Pagination({ currentPage, totalPages, setCurrentPage }) {
   return (
-    <nav className="mb-12 flex flex-wrap items-center justify-center gap-2" aria-label="Pagination">
+    <nav className="flex flex-wrap items-center justify-center gap-2" aria-label="Pagination">
       <button
         onClick={() => setCurrentPage(currentPage - 1)}
         disabled={currentPage === 1}
