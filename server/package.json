@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "dev": "node --watch index.js"
+    "dev": "node --watch index.js",
+    "build": "node index.js"
   },
   "dependencies": {
     "@chargily/chargily-pay": "^2.1.0",
