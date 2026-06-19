@@ -106,7 +106,7 @@ export default function AdminDashboard() {
   }
 
   return (
-    <main className="min-h-screen bg-[var(--color-bg)]">
+    <main className="min-h-screen bg-[var(--color-bg)] flex flex-col justify-center items-center">
       <header className="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[var(--color-surface-elevated)]/95 backdrop-blur">
         <div className="container-page flex h-16 items-center justify-between">
           <div className="flex items-center gap-3">

@@ -32,7 +32,7 @@ export default function AdminLogin() {
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[var(--color-bg)] px-4">
+    <main className="flex flex-col justify-center items-center min-h-screen items-center justify-center bg-[var(--color-bg)] px-4">
       <div className="w-full max-w-sm rounded-lg border border-[var(--color-border)] bg-[var(--color-surface-elevated)] p-8 shadow-sm">
         <div className="mb-6 text-center">
           <h1 className="text-[var(--text-2xl)] font-extrabold text-[var(--color-text)]">Furniro Admin</h1>

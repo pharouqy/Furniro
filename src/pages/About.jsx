@@ -13,7 +13,7 @@ function About() {
   ];
 
   return (
-    <main className="bg-[var(--color-bg)]">
+    <main className="bg-[var(--color-bg)] flex flex-col justify-center items-center">
       <Banner title="About" bgImage={shopBanner} breadcrumbs={[{ label: "About" }]} />
 
       <section className="container-page grid gap-10 section lg:grid-cols-[0.9fr_1.1fr] lg:items-center">

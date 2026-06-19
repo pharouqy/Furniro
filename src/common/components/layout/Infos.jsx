@@ -2,7 +2,7 @@ import { Trophy, CheckCircle, Truck, Headphones } from "lucide-react";
 
 export default function Infos() {
   return (
-    <section className="section w-full bg-[var(--color-primary-subtle)]" aria-label="Service promises">
+    <section className="section bg-[var(--color-primary-subtle)] flex justify-center items-center" aria-label="Service promises">
       <div className="container-page">
         <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-[1.3fr_0.7fr_0.7fr_1.3fr]">
           <div className="flex items-start gap-5 rounded-xl border-[var(--color-border)] bg-[var(--color-surface-elevated)] p-6 shadow-[var(--shadow-sm)] lg:col-start-1">

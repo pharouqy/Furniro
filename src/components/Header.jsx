@@ -31,7 +31,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[var(--color-surface-1)]/90 shadow-sm backdrop-blur-md transition-all duration-300">
+      <header className="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[var(--color-surface-1)]/90 shadow-sm backdrop-blur-md transition-all duration-300 flex flex-col justify-center items-center">
         <div className="container-page flex min-h-[72px] items-center justify-between gap-5 py-3 md:min-h-16 md:py-0">
           <Link
             to="/"

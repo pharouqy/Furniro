@@ -48,10 +48,10 @@ export default function Home() {
   const [inspirationRef, inspirationInView] = useInView();
 
   return (
-    <main className="w-full bg-[var(--color-bg)]">
+    <main className="w-full bg-[var(--color-bg)] flex flex-col justify-center items-center">
       {/* Hero Section */}
       <section
-        className="relative flex min-h-[600px] items-center overflow-hidden bg-cover bg-center md:min-h-[720px] lg:min-h-[800px]"
+        className="w-full relative flex min-h-[600px] items-center overflow-hidden bg-cover bg-center md:min-h-[720px] lg:min-h-[800px]"
         style={{ backgroundImage: `url(${livingRoomHero})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent" />

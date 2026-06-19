@@ -14,7 +14,7 @@ export default function Cart() {
   const totalPrice = useCartStore((state) => state.getTotalPrice());
 
   return (
-    <main className="bg-[var(--color-bg)]">
+    <main className="bg-[var(--color-bg)] flex flex-col justify-center items-center">
       <Banner title="Cart" bgImage={shopBanner} breadcrumbs={[{ label: "Cart" }]} />
 
       <section className="container-page grid gap-12 py-16 xl:grid-cols-[1fr_400px] xl:items-start xl:py-24">

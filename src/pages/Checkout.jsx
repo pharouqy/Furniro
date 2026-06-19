@@ -131,7 +131,7 @@ export default function Checkout() {
   ];
 
   return (
-    <main className="bg-[var(--color-bg)]">
+    <main className="bg-[var(--color-bg)] flex flex-col justify-center items-center">
       <Banner
         title="Checkout"
         bgImage={shopBanner}

@@ -15,7 +15,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface-1)]">
+    <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface-1)] flex flex-col justify-center items-center">
       <div className="container-page grid gap-10 py-12 sm:grid-cols-2 md:grid-cols-4 md:gap-12 lg:py-16">
         <div className="flex flex-col gap-6">
           <div>

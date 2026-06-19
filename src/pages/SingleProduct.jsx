@@ -64,7 +64,7 @@ export default function SingleProduct() {
   ];
 
   return (
-    <main className="w-full bg-[var(--color-bg)]">
+    <main className="w-full bg-[var(--color-bg)] flex flex-col justify-center items-center">
       <Banner
         title={product.title}
         bgImage={shopBanner}

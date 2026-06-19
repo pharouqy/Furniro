@@ -20,7 +20,7 @@ function Contact() {
   };
 
   return (
-    <main className="bg-[var(--color-bg)]">
+    <main className="bg-[var(--color-bg)] flex flex-col justify-center items-center">
       <Banner title="Contact" bgImage={shopBanner} breadcrumbs={[{ label: "Contact" }]} />
 
       <section className="container-page py-16 lg:py-24">
