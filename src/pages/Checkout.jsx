@@ -5,6 +5,7 @@ import Banner from "@/common/components/layout/Banner";
 import Infos from "@/common/components/layout/Infos";
 import Form from "../components/Form";
 import { useCartStore } from "@/features/cart/store/cartStore";
+import { useToastStore } from "@/common/stores/toastStore";
 import { api } from "@/common/utils/api";
 import shopBanner from "/public/shop_banner.webp";
 
@@ -29,6 +30,7 @@ export default function Checkout() {
     message: "",
   });
   const [errors, setErrors] = useState({});
+  const addToast = useToastStore((state) => state.addToast);
   const [submitting, setSubmitting] = useState(false);
 
   const handleFormChange = (e) => {
@@ -59,12 +61,12 @@ export default function Checkout() {
 
   const handlePlaceOrder = async () => {
     if (items.length === 0) {
-      alert("Your cart is empty. Please add products before checkout.");
+      addToast("Your cart is empty. Add products before checking out.", "error");
       return;
     }
 
     if (!selectedMethod) {
-      alert("Please select a payment method.");
+      addToast("Please select a payment method.", "error");
       return;
     }
 
@@ -100,11 +102,11 @@ export default function Checkout() {
         window.location.href = checkoutUrl;
       } else {
         clearCart();
-        alert("Order placed successfully. Thank you for shopping with Furniro.");
+        addToast("Order placed successfully. Thank you!", "success");
         navigate("/");
       }
     } catch (err) {
-      alert(err.message || "Something went wrong. Please try again.");
+      addToast(err.message || "Something went wrong. Please try again.", "error");
     } finally {
       setSubmitting(false);
     }
@@ -129,7 +131,7 @@ export default function Checkout() {
   ];
 
   return (
-    <main className="bg-[#fbfbf9]">
+    <main className="bg-[var(--color-bg)]">
       <Banner
         title="Checkout"
         bgImage={shopBanner}
@@ -139,28 +141,28 @@ export default function Checkout() {
       <section className="container-page grid gap-12 py-16 lg:grid-cols-[1fr_460px] lg:items-start lg:py-24">
         <Form formData={formData} onChange={handleFormChange} errors={errors} />
 
-        <aside className="sticky top-28 rounded-3xl border border-neutral-100 bg-[#FDF9F3] p-8 shadow-[0_20px_50px_rgba(184,142,47,0.08)]">
-          <div className="flex items-center justify-between border-b border-neutral-200/60 pb-5">
-            <h2 className="text-2xl font-black text-neutral-900">Order Summary</h2>
-            <span className="text-xs font-bold text-neutral-450 uppercase tracking-widest">{items.length} items</span>
+        <aside className="sticky top-28 rounded-3xl border border-[var(--color-border)] bg-[var(--color-primary-subtle)] p-8 shadow-[var(--shadow-md)]">
+          <div className="flex items-center justify-between border-b border-[var(--color-border)] pb-5">
+            <h2 className="text-2xl font-black text-[var(--color-text)]">Order Summary</h2>
+            <span className="text-xs font-bold text-[var(--color-text-subtle)] uppercase tracking-widest">{items.length} items</span>
           </div>
 
           {items.length === 0 ? (
-            <p className="py-12 text-center text-sm text-neutral-500">Your cart is empty.</p>
+            <p className="py-12 text-center text-sm text-[var(--color-text-muted)]">Your cart is empty.</p>
           ) : (
-            <div className="divide-y divide-neutral-100 max-h-96 overflow-y-auto pr-2 my-2">
+            <div className="divide-y divide-[var(--color-border)] max-h-96 overflow-y-auto pr-2 my-2">
               {items.map((item) => (
                 <div key={item.variantId} className="flex gap-4 py-5">
-                  <img src={item.picture} alt={item.title} className="h-16 w-16 rounded-xl object-cover shadow-sm bg-white" />
+                  <img src={item.picture} alt={item.title} loading="lazy" decoding="async" className="h-16 w-16 rounded-xl object-cover shadow-sm bg-white" />
                   <div className="min-w-0 flex-1">
-                    <p className="truncate font-extrabold text-neutral-900 text-sm">{item.title}</p>
-                    <p className="mt-1 text-xs text-[#b88e2f] font-bold">
+                    <p className="truncate font-extrabold text-[var(--color-text)] text-sm">{item.title}</p>
+                    <p className="mt-1 text-xs text-[var(--color-primary)] font-bold">
                       Qty {item.quantity}
                       {item.size && ` / ${item.size}`}
                       {item.color && ` / ${item.color}`}
                     </p>
                   </div>
-                  <span className="text-sm font-bold text-neutral-800">
+                  <span className="text-sm font-bold text-[var(--color-text)]">
                     {(item.price * item.quantity).toLocaleString("fr-FR")} Da
                   </span>
                 </div>
@@ -168,30 +170,30 @@ export default function Checkout() {
             </div>
           )}
 
-          <div className="space-y-4 border-t border-neutral-200/60 pt-6 text-sm">
-            <div className="flex justify-between text-neutral-600 font-semibold">
+          <div className="space-y-4 border-t border-[var(--color-border)] pt-6 text-sm">
+            <div className="flex justify-between text-[var(--color-text-muted)] font-semibold">
               <span>Subtotal</span>
               <span>{totalPrice.toLocaleString("fr-FR")} Da</span>
             </div>
-            <div className="flex justify-between text-neutral-600 font-semibold">
+            <div className="flex justify-between text-[var(--color-text-muted)] font-semibold">
               <span>Shipping</span>
-              <span className="font-bold text-emerald-700">Free</span>
+              <span className="font-bold text-[var(--color-success)]">Free</span>
             </div>
-            <div className="flex justify-between border-t border-neutral-200/60 pt-5 text-lg font-black text-neutral-900">
+            <div className="flex justify-between border-t border-[var(--color-border)] pt-5 text-lg font-black text-[var(--color-text)]">
               <span>Total</span>
-              <span className="text-2xl text-[#8F6B1F]">{totalPrice.toLocaleString("fr-FR")} Da</span>
+              <span className="text-2xl text-[var(--color-primary-hover)]">{totalPrice.toLocaleString("fr-FR")} Da</span>
             </div>
           </div>
 
           <fieldset className="mt-8 space-y-4">
-            <legend className="mb-4 text-xs font-bold text-neutral-400 uppercase tracking-widest">Payment Method</legend>
+            <legend className="mb-4 text-xs font-bold text-[var(--color-text-subtle)] uppercase tracking-widest">Payment Method</legend>
             {paymentMethods.map((method) => (
               <label
                 key={method.id}
                 className={`block rounded-2xl border p-5 transition-all duration-300 cursor-pointer ${
                   selectedMethod === method.id 
-                    ? "border-[#B88E2F] bg-white shadow-sm" 
-                    : "border-neutral-200 bg-white hover:border-neutral-300"
+                    ? "border-[var(--color-primary)] bg-[var(--color-surface-1)] shadow-sm" 
+                    : "border-[var(--color-border)] bg-[var(--color-surface-1)] hover:border-[var(--color-border-strong)]"
                 }`}
               >
                 <span className="flex items-center gap-3">
@@ -199,20 +201,20 @@ export default function Checkout() {
                     type="radio"
                     name="paymentMethod"
                     value={method.id}
-                    className="h-4.5 w-4.5 accent-[#B88E2F] cursor-pointer"
+                    className="h-4.5 w-4.5 accent-[var(--color-primary)] cursor-pointer"
                     checked={selectedMethod === method.id}
                     onChange={(e) => setSelectedMethod(e.target.value)}
                   />
-                  <span className="text-sm font-extrabold text-neutral-900">{method.label}</span>
+                  <span className="text-sm font-extrabold text-[var(--color-text)]">{method.label}</span>
                 </span>
                 {selectedMethod === method.id && (
-                  <span className="mt-3 block pl-7 text-xs leading-6 text-neutral-500 transition-all duration-300">{method.description}</span>
+                  <span className="mt-3 block pl-7 text-xs leading-6 text-[var(--color-text-muted)] transition-all duration-300">{method.description}</span>
                 )}
               </label>
             ))}
           </fieldset>
 
-          <p className="mt-6 text-xs leading-6 text-neutral-450 font-medium">
+          <p className="mt-6 text-xs leading-6 text-[var(--color-text-subtle)] font-medium">
             Your personal data will be used to process your order and support your experience on this website.
           </p>
 

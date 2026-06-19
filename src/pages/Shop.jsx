@@ -86,7 +86,7 @@ export default function Shop() {
   };
 
   return (
-    <main className="w-full bg-[#fbfbf9]">
+    <main className="w-full bg-[var(--color-bg)]">
       <Banner title="Shop" bgImage={shopBanner} breadcrumbs={[{ label: "Shop" }]} />
 
       <ToolBare
@@ -99,11 +99,11 @@ export default function Shop() {
         totalProducts={totalProducts}
       />
 
-      <section className="container-page py-16 lg:py-24">
+      <section className="container-page section">
         {currentProducts.length === 0 ? (
-          <div className="rounded-2xl border border-neutral-100 bg-white py-24 text-center shadow-subtle">
-            <p className="text-lg font-bold text-neutral-800">No products found.</p>
-            <p className="mt-2 text-sm text-neutral-500">Try changing your filters or sorting options.</p>
+          <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-1)] py-24 text-center shadow-[var(--shadow-sm)]">
+            <p className="text-lg font-bold text-[var(--color-text)]">No products found.</p>
+            <p className="mt-2 text-sm text-[var(--color-text-muted)]">Try changing your filters or sorting options.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-4 lg:gap-10">

@@ -20,20 +20,22 @@ export default function SliderProduct({ images = [] }) {
           <button
             key={img}
             onClick={() => setActiveIndex(idx)}
-            className={`h-16 w-16 shrink-0 overflow-hidden rounded-lg border-2 bg-stone-100 transition-all md:h-20 md:w-20 ${
-              activeIndex === idx ? "border-[#B88E2F]" : "border-transparent opacity-70 hover:opacity-100"
+            className={`h-16 w-16 shrink-0 overflow-hidden rounded-lg border-2 bg-[var(--color-surface-2)] transition-all md:h-20 md:w-20 ${
+              activeIndex === idx ? "border-[var(--color-primary)]" : "border-transparent opacity-70 hover:opacity-100"
             }`}
             aria-label={`Show product image ${idx + 1}`}
           >
-            <img src={img} alt={`Product thumbnail ${idx + 1}`} className="h-full w-full object-cover" />
+            <img src={img} alt={`Product thumbnail ${idx + 1}`} loading="lazy" decoding="async" className="h-full w-full object-cover" />
           </button>
         ))}
       </div>
 
-      <div className="order-1 aspect-square overflow-hidden rounded-lg bg-[#EEF4EF] md:order-2 md:aspect-[5/4]">
+      <div className="order-1 aspect-square overflow-hidden rounded-lg bg-[var(--color-surface-2)] md:order-2 md:aspect-[5/4]">
         <img
           src={list[activeIndex] || list[0]}
           alt="Product detail"
+          loading="lazy"
+          decoding="async"
           className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
         />
       </div>

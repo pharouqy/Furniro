@@ -1,6 +1,5 @@
 import { Link, useSearchParams } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { CircleX } from "lucide-react";
 
 export default function CheckoutFailure() {
   const [searchParams] = useSearchParams();
@@ -9,11 +8,11 @@ export default function CheckoutFailure() {
   return (
     <main className="flex min-h-[70vh] items-center bg-[#fbfbf9]">
       <section className="container-page text-center">
-        <span className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-red-100 text-4xl text-red-500">
-          <FontAwesomeIcon icon={faCircleXmark} />
+        <span className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[var(--color-error-muted)] text-4xl text-[var(--color-error)]">
+          <CircleX size={40} />
         </span>
-        <h1 className="mt-6 text-4xl font-extrabold text-stone-950">Payment Failed</h1>
-        <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-stone-500">
+        <h1 className="mt-6 text-[var(--text-4xl)] font-extrabold text-[var(--color-text)]">Payment Failed</h1>
+        <p className="mx-auto mt-4 max-w-md text-[var(--text-base)] leading-[var(--leading-normal)] text-[var(--color-text-muted)]">
           Your payment could not be processed. Please try again or choose a different payment method.
         </p>
         {orderId && (

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
+import { CircleCheck } from "lucide-react";
 import { api } from "@/common/utils/api";
 
 export default function CheckoutSuccess() {
@@ -30,11 +29,11 @@ export default function CheckoutSuccess() {
   return (
     <main className="flex min-h-[70vh] items-center bg-[#fbfbf9]">
       <section className="container-page text-center">
-        <span className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-emerald-100 text-4xl text-emerald-600">
-          <FontAwesomeIcon icon={faCircleCheck} />
+        <span className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[var(--color-success-muted)] text-4xl text-[var(--color-success)]">
+          <CircleCheck size={40} />
         </span>
-        <h1 className="mt-6 text-4xl font-extrabold text-stone-950">Payment Successful</h1>
-        <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-stone-500">
+        <h1 className="mt-6 text-[var(--text-4xl)] font-extrabold text-[var(--color-text)]">Payment Successful</h1>
+        <p className="mx-auto mt-4 max-w-md text-[var(--text-base)] leading-[var(--leading-normal)] text-[var(--color-text-muted)]">
           {status === "paid"
             ? "Your order has been confirmed and is being prepared."
             : status === "verifying"

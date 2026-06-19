@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
+import { ArrowRight } from "lucide-react";
 
 import living from "/public/Living.jpg";
 import bedroom from "/public/Bedroom.jpg";
@@ -27,6 +26,7 @@ import ContentHome from "@/common/components/atoms/ContentHome";
 import ProductCard from "@/common/components/molecules/ProductCard";
 import Slider from "@/common/components/atoms/Slider";
 import GridSection from "@/common/components/atoms/GridSection";
+import useInView from "@/common/hooks/useInView";
 
 export default function Home() {
   const products = useMemo(
@@ -43,28 +43,32 @@ export default function Home() {
     []
   );
 
+  const [roomsRef, roomsInView] = useInView();
+  const [productsRef, productsInView] = useInView();
+  const [inspirationRef, inspirationInView] = useInView();
+
   return (
-    <main className="w-full bg-[#fbfbf9]">
+    <main className="w-full bg-[var(--color-bg)]">
       {/* Hero Section */}
       <section
         className="relative flex min-h-[600px] items-center overflow-hidden bg-cover bg-center md:min-h-[720px] lg:min-h-[800px]"
         style={{ backgroundImage: `url(${livingRoomHero})` }}
       >
-        <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent" />
         <div className="container-page relative z-10 py-16 flex justify-end md:py-20">
-          <div className="w-full max-w-lg rounded-3xl bg-[#FDF9F3]/95 p-8 shadow-[0_30px_70px_rgba(184,142,47,0.15)] backdrop-blur-md border border-white/60 text-neutral-900 md:p-10 lg:max-w-xl lg:p-12 animate-fade-in">
-            <p className="eyebrow text-[#b88e2f] font-bold">New Arrival</p>
-            <h1 className="mt-4 text-4xl font-black leading-tight tracking-tight text-neutral-900 md:text-5xl lg:text-6xl">
+          <div className="w-full max-w-lg rounded-3xl bg-[var(--color-surface-1)]/95 p-8 shadow-[var(--shadow-lg)] backdrop-blur-md border border-[var(--color-border)] text-[var(--color-text)] md:p-10 lg:max-w-xl lg:p-12 animate-fade-in transition-shadow duration-500">
+            <p className="eyebrow text-[var(--color-primary)] font-bold">New Arrival</p>
+            <h1 className="mt-4 text-[var(--text-5xl)] font-black leading-[var(--leading-tight)] tracking-[var(--tracking-tight)] text-[var(--color-text)]">
               Discover Our New Collection
             </h1>
-            <p className="mt-6 text-sm leading-8 text-neutral-600 md:text-base">
+            <p className="mt-6 text-[var(--text-base)] leading-[var(--leading-normal)] text-[var(--color-text-muted)]">
               Warm modern furniture for spaces that work beautifully every day.
               Crafted with premium materials, balanced textures, and effortless utility.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <Link to="/shop" className="btn-primary">
                 Shop Collection
-                <FontAwesomeIcon icon={faArrowRightLong} />
+                <ArrowRight size={16} />
               </Link>
               <a href="#rooms" className="btn-secondary">
                 Browse Rooms
@@ -75,7 +79,7 @@ export default function Home() {
       </section>
 
       {/* Rooms Section */}
-      <section id="rooms" className="container-page py-20 md:py-28">
+      <section id="rooms" ref={roomsRef} className={`container-page py-20 md:py-28 ${roomsInView ? "animate-reveal" : "opacity-0"}`}>
         <div className="mb-12 text-center">
           <p className="eyebrow">Rooms</p>
           <h2 className="section-heading mt-3">Browse the range</h2>
@@ -84,14 +88,14 @@ export default function Home() {
           </p>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 sm:gap-8 lg:gap-10">
-          <ContentHome living={dining} text="Dining Room" />
-          <ContentHome living={living} text="Living Room" />
-          <ContentHome living={bedroom} text="Bedroom" />
+          <div className={roomsInView ? "animate-reveal animate-reveal-delay-1" : "opacity-0"}><ContentHome living={dining} text="Dining Room" /></div>
+          <div className={roomsInView ? "animate-reveal animate-reveal-delay-2" : "opacity-0"}><ContentHome living={living} text="Living Room" /></div>
+          <div className={roomsInView ? "animate-reveal animate-reveal-delay-3" : "opacity-0"}><ContentHome living={bedroom} text="Bedroom" /></div>
         </div>
       </section>
 
       {/* Selected Pieces / Products Section */}
-      <section className="bg-white py-20 md:py-28 border-y border-neutral-100">
+      <section ref={productsRef} className={`bg-[var(--color-surface-1)] section border-y border-[var(--color-border)] ${productsInView ? "animate-reveal" : "opacity-0"}`}>
         <div className="container-page">
           <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
@@ -100,27 +104,28 @@ export default function Home() {
             </div>
             <Link to="/shop" className="btn-secondary w-fit">
               View All Products
-              <FontAwesomeIcon icon={faArrowRightLong} />
+              <ArrowRight size={16} />
             </Link>
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-4 lg:gap-10">
-            {products.map((product) => (
-              <ProductCard
-                key={product.id}
-                id={product.id}
-                title={product.title}
-                description={product.description}
-                price={`${product.price} Da`}
-                discount={product.discount}
-                image={product.image}
-              />
+            {products.map((product, i) => (
+              <div key={product.id} className={productsInView ? `animate-reveal animate-reveal-delay-${Math.min(i + 1, 5)}` : "opacity-0"}>
+                <ProductCard
+                  id={product.id}
+                  title={product.title}
+                  description={product.description}
+                  price={`${product.price} Da`}
+                  discount={product.discount}
+                  image={product.image}
+                />
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Inspiration Section */}
-      <section className="bg-[#fcf9f4] py-20 md:py-28">
+      <section ref={inspirationRef} className={`bg-[var(--color-surface-sunken)] section ${inspirationInView ? "animate-reveal" : "opacity-0"}`}>
         <div className="container-page grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
           <div className="flex flex-col items-start">
             <p className="eyebrow">Inspiration</p>
@@ -135,14 +140,14 @@ export default function Home() {
 
           <div className="grid gap-6 md:grid-cols-[1fr_0.9fr] md:gap-8">
             <div className="relative min-h-[460px] overflow-hidden rounded-2xl shadow-lg group">
-              <img src={frameworks} alt="Calm bedroom inspiration" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
-              <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between rounded-2xl bg-white/95 p-6 shadow-md backdrop-blur-md border border-white/50">
+              <img src={frameworks} alt="Calm bedroom inspiration" loading="lazy" decoding="async" fetchpriority="high" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+              <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between rounded-2xl bg-[var(--color-surface-elevated)]/95 p-6 shadow-md backdrop-blur-md border border-[var(--color-border)]">
                 <div>
-                  <span className="text-xs font-bold text-neutral-400 uppercase tracking-widest">01 / Bedroom</span>
-                  <h3 className="mt-1 text-xl font-extrabold text-neutral-900">Inner Peace</h3>
+                  <span className="text-xs font-bold text-[var(--color-text-subtle)] uppercase tracking-widest">01 / Bedroom</span>
+                  <h3 className="mt-1 text-xl font-extrabold text-[var(--color-text)]">Inner Peace</h3>
                 </div>
-                <Link to="/shop" className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#B88E2F] text-white transition-all hover:bg-[#8f6b1f] hover:translate-y-[-2px] shadow-sm" aria-label="Shop bedroom inspiration">
-                  <FontAwesomeIcon icon={faArrowRightLong} />
+                <Link to="/shop" className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--color-primary)] text-[var(--color-text-inverse)] transition-all hover:bg-[var(--color-primary-hover)] hover:translate-y-[-2px] shadow-sm" aria-label="Shop bedroom inspiration">
+                  <ArrowRight size={18} />
                 </Link>
               </div>
             </div>
@@ -152,10 +157,10 @@ export default function Home() {
       </section>
 
       {/* Share setup Section */}
-      <section className="container-page py-20 text-center md:py-28">
+      <section className="container-page section text-center">
         <p className="eyebrow">Share your setup</p>
         <h2 className="section-heading mt-3">#FurniroFurniture</h2>
-        <div className="mt-12 overflow-hidden rounded-2xl border border-neutral-100 bg-white p-4 shadow-subtle">
+        <div className="mt-12 overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-1)] p-4 shadow-[var(--shadow-sm)]">
           <GridSection
             house1={house1}
             house2={house2}

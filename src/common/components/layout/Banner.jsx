@@ -7,7 +7,7 @@ export default function Banner({ title, bgImage, breadcrumbs = [] }) {
       style={{ backgroundImage: `url(${bgImage})` }}
       aria-label={`${title} page banner`}
     >
-      <div className="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-stone-950/25 to-white/20" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-text)]/70 via-[var(--color-text)]/25 to-transparent" />
       <div className="container-page relative z-10 pb-10 pt-20 text-white">
         <p className="eyebrow text-white/80">Furniro collection</p>
         <h1 className="mt-2 max-w-3xl text-4xl font-extrabold leading-tight tracking-tight md:text-6xl">

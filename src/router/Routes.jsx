@@ -1,20 +1,25 @@
+import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
+import ErrorBoundary from "@/common/components/atoms/ErrorBoundary";
 
-import Home from "../pages/Home";
-import Shop from "../pages/Shop";
-import About from "../pages/About";
-import Contact from "../pages/Contact";
-import NotFound from "../pages/NotFound";
-import SingleProduct from "../pages/SingleProduct";
-import Cart from "../pages/Cart";
-import Checkout from "../pages/Checkout";
-import CheckoutSuccess from "../pages/CheckoutSuccess";
-import CheckoutFailure from "../pages/CheckoutFailure";
-import AdminLogin from "../pages/AdminLogin";
-import AdminDashboard from "../pages/AdminDashboard";
+const Home = lazy(() => import("../pages/Home"));
+const Shop = lazy(() => import("../pages/Shop"));
+const About = lazy(() => import("../pages/About"));
+const Contact = lazy(() => import("../pages/Contact"));
+const NotFound = lazy(() => import("../pages/NotFound"));
+const SingleProduct = lazy(() => import("../pages/SingleProduct"));
+const Cart = lazy(() => import("../pages/Cart"));
+const Checkout = lazy(() => import("../pages/Checkout"));
+const CheckoutSuccess = lazy(() => import("../pages/CheckoutSuccess"));
+const CheckoutFailure = lazy(() => import("../pages/CheckoutFailure"));
+const AdminLogin = lazy(() => import("../pages/AdminLogin"));
+const AdminDashboard = lazy(() => import("../pages/AdminDashboard"));
 
 function RouteIndex() {
   return (
+    <ErrorBoundary>
+    <Suspense fallback={null}>
+    <div className="animate-fade-in">
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/shop" element={<Shop />} />
@@ -29,6 +34,9 @@ function RouteIndex() {
       <Route path="/admin" element={<AdminDashboard />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
+    </div>
+    </Suspense>
+    </ErrorBoundary>
   );
 }
 

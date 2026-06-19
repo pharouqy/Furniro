@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { X } from "lucide-react";
 import { useCartStore } from "@/features/cart/store/cartStore";
 
 export default function OffCart({ isOpen, setIsOpen }) {
@@ -18,26 +17,26 @@ export default function OffCart({ isOpen, setIsOpen }) {
         aria-label="Close cart overlay"
       />
 
-      <aside className="animate-slide-in absolute inset-y-0 right-0 flex w-full max-w-lg flex-col bg-white shadow-2xl">
-        <div className="flex items-center justify-between border-b border-stone-200 p-6">
+      <aside className="animate-slide-in absolute inset-y-0 right-0 flex w-full max-w-lg flex-col bg-[var(--color-surface-elevated)] shadow-2xl">
+        <div className="flex items-center justify-between border-b border-[var(--color-border)] p-6">
           <div>
             <p className="eyebrow">Furniro</p>
-            <h2 className="mt-1 text-2xl font-extrabold text-stone-950">Shopping Cart</h2>
+            <h2 className="mt-1 text-2xl font-extrabold text-[var(--color-text)]">Shopping Cart</h2>
           </div>
           <button
             onClick={() => setIsOpen(false)}
-            className="flex h-10 w-10 items-center justify-center rounded-md text-stone-500 transition-colors hover:bg-stone-100 hover:text-stone-950"
+            className="flex h-10 w-10 items-center justify-center rounded-md text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-2)] hover:text-[var(--color-text)]"
             aria-label="Close cart"
           >
-            <FontAwesomeIcon icon={faXmark} />
+            <X size={20} />
           </button>
         </div>
 
         <div className="flex-1 overflow-y-auto px-6 py-2">
           {items.length === 0 ? (
             <div className="flex h-full flex-col items-center justify-center text-center">
-              <p className="text-lg font-bold text-stone-950">Your cart is empty.</p>
-              <p className="mt-2 max-w-xs text-sm leading-6 text-stone-500">
+              <p className="text-lg font-bold text-[var(--color-text)]">Your cart is empty.</p>
+              <p className="mt-2 max-w-xs text-sm leading-6 text-[var(--color-text-muted)]">
                 Add a piece from the shop and it will appear here.
               </p>
               <button onClick={() => setIsOpen(false)} className="btn-primary mt-6">
@@ -45,33 +44,33 @@ export default function OffCart({ isOpen, setIsOpen }) {
               </button>
             </div>
           ) : (
-            <ul className="divide-y divide-stone-100">
+            <ul className="divide-y divide-[var(--color-border)]">
               {items.map((item) => (
                 <li key={item.variantId} className="flex gap-4 py-5">
-                  <img src={item.picture} alt={item.title} className="h-20 w-20 shrink-0 rounded-md object-cover" />
+                  <img src={item.picture} alt={item.title} loading="lazy" decoding="async" className="h-20 w-20 shrink-0 rounded-md object-cover" />
                   <div className="min-w-0 flex-1">
                     <div className="flex gap-3">
-                      <h3 className="min-w-0 flex-1 truncate font-bold text-stone-950" title={item.title}>
+                      <h3 className="min-w-0 flex-1 truncate font-bold text-[var(--color-text)]" title={item.title}>
                         {item.title}
                       </h3>
-                      <span className="shrink-0 text-sm font-bold text-stone-800">
+                      <span className="shrink-0 text-sm font-bold text-[var(--color-text)]">
                         {(item.price * item.quantity).toLocaleString("fr-FR")} Da
                       </span>
                     </div>
                     {(item.size || item.color) && (
-                      <p className="mt-1 text-xs text-stone-500">
+                      <p className="mt-1 text-xs text-[var(--color-text-muted)]">
                         {item.size && `Size: ${item.size}`}
                         {item.size && item.color && " / "}
                         {item.color && `Color: ${item.color}`}
                       </p>
                     )}
                     <div className="mt-4 flex items-center justify-between text-sm">
-                      <p className="text-stone-500">
+                      <p className="text-[var(--color-text-muted)]">
                         Qty {item.quantity} x {item.price.toLocaleString("fr-FR")} Da
                       </p>
                       <button
                         onClick={() => removeFromCart(item.variantId)}
-                        className="font-bold text-[#C76543] hover:text-red-700"
+                        className="font-bold text-[var(--color-error)] hover:text-[var(--color-error)]"
                       >
                         Remove
                       </button>
@@ -83,11 +82,11 @@ export default function OffCart({ isOpen, setIsOpen }) {
           )}
         </div>
 
-        {items.length > 0 && (
-          <div className="border-t border-stone-200 bg-[#F7F1E8] p-6">
-            <div className="flex items-center justify-between font-bold text-stone-950">
-              <span>Subtotal</span>
-              <span className="text-xl text-[#8F6B1F]">{subtotal.toLocaleString("fr-FR")} Da</span>
+          {items.length > 0 && (
+            <div className="border-t border-[var(--color-border)] bg-[var(--color-primary-subtle)] p-6">
+              <div className="flex items-center justify-between font-bold text-[var(--color-text)]">
+                <span>Subtotal</span>
+                <span className="text-xl text-[var(--color-primary-hover)]">{subtotal.toLocaleString("fr-FR")} Da</span>
             </div>
             <div className="mt-5 grid grid-cols-2 gap-3">
               <Link

@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
+import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 
 function Slider({ objt }) {
@@ -13,13 +12,13 @@ function Slider({ objt }) {
   return (
     <div className="flex flex-col gap-4">
       <div className="relative aspect-[4/5] min-h-[360px] overflow-hidden rounded-lg bg-stone-100">
-        <img src={slide} alt={`Room inspiration ${index + 1}`} className="h-full w-full object-cover" />
+        <img src={slide} alt={`Room inspiration ${index + 1}`} loading="lazy" decoding="async" className="h-full w-full object-cover" />
         <button
           onClick={handleNext}
-          className="absolute bottom-4 right-4 flex h-11 w-11 items-center justify-center rounded-md bg-white text-[#8F6B1F] shadow-md transition-colors hover:bg-[#B88E2F] hover:text-white"
+          className="absolute bottom-4 right-4 flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-surface-elevated)] text-[var(--color-primary-hover)] shadow-md transition-colors hover:bg-[var(--color-primary)] hover:text-[var(--color-text-inverse)]"
           aria-label="Next room inspiration"
         >
-          <FontAwesomeIcon icon={faArrowRightLong} />
+          <ArrowRight size={20} />
         </button>
       </div>
       <div className="flex justify-center gap-2">
@@ -28,7 +27,7 @@ function Slider({ objt }) {
             key={i}
             onClick={() => setIndex(i)}
             className={`h-2.5 rounded-full transition-all ${
-              index === i ? "w-8 bg-[#B88E2F]" : "w-2.5 bg-stone-300 hover:bg-stone-400"
+              index === i                 ? "w-8 bg-[var(--color-primary)]" : "w-2.5 bg-[var(--color-border)] hover:bg-[var(--color-border-strong)]"
             }`}
             aria-label={`Show room inspiration ${i + 1}`}
             aria-current={index === i ? "true" : undefined}

@@ -1,12 +1,12 @@
-function Field({ id, label, required, error, children }) {
+﻿function Field({ id, label, required, error, children }) {
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={id} className="text-sm font-bold text-stone-800">
-        {label} {required && <span className="text-[#C76543]">*</span>}
+      <label htmlFor={id} className="text-sm font-bold text-[var(--color-text)]">
+        {label} {required && <span className="text-[var(--color-error)]">*</span>}
       </label>
       {children}
       {error && (
-        <span className="text-xs font-semibold text-[#C76543]" role="alert">
+        <span className="text-xs font-semibold text-[var(--color-error)]" role="alert">
           {error}
         </span>
       )}
@@ -23,7 +23,7 @@ export default function Form({ formData = {}, onChange = () => {}, errors = {} }
     { code: "DZ", name: "Algeria" },
   ];
 
-  const errorClass = (field) => (errors[field] ? "border-[#C76543] focus:border-[#C76543]" : "");
+  const errorClass = (field) => (errors[field] ? "border-[var(--color-error)] focus:border-[var(--color-error)] animate-shake" : "");
 
   return (
     <section className="w-full">
@@ -32,7 +32,7 @@ export default function Form({ formData = {}, onChange = () => {}, errors = {} }
         <h2 className="mt-2 text-3xl font-extrabold text-stone-950">Billing Details</h2>
       </div>
 
-      <div className="grid gap-5 rounded-2xl border border-neutral-100 bg-white p-6 shadow-subtle md:p-8">
+      <div className="grid gap-5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-elevated)] p-6 shadow-[var(--shadow-sm)] md:p-8">
         <div className="grid gap-5 sm:grid-cols-2">
           <Field id="firstName" label="First Name" required error={errors.firstName}>
             <input

@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
 
@@ -32,11 +32,11 @@ export default function AdminLogin() {
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#fffdfa] px-4">
-      <div className="w-full max-w-sm rounded-lg border border-stone-200 bg-white p-8 shadow-sm">
+    <main className="flex min-h-screen items-center justify-center bg-[var(--color-bg)] px-4">
+      <div className="w-full max-w-sm rounded-lg border border-[var(--color-border)] bg-[var(--color-surface-elevated)] p-8 shadow-sm">
         <div className="mb-6 text-center">
-          <h1 className="text-2xl font-extrabold text-stone-950">Furniro Admin</h1>
-          <p className="mt-1 text-sm text-stone-500">
+          <h1 className="text-[var(--text-2xl)] font-extrabold text-[var(--color-text)]">Furniro Admin</h1>
+          <p className="mt-1 text-[var(--text-sm)] text-[var(--color-text-muted)]">
             {isRegister ? "Create an admin account" : "Sign in to manage orders"}
           </p>
         </div>
@@ -44,7 +44,7 @@ export default function AdminLogin() {
         <form onSubmit={handleSubmit} className="space-y-4">
           {isRegister && (
             <div>
-              <label className="text-sm font-bold text-stone-800">Name</label>
+              <label className="text-sm font-bold text-[var(--color-text)]">Name</label>
               <input
                 type="text"
                 required
@@ -57,7 +57,7 @@ export default function AdminLogin() {
           )}
 
           <div>
-            <label className="text-sm font-bold text-stone-800">Email</label>
+            <label className="text-sm font-bold text-[var(--color-text)]">Email</label>
             <input
               type="email"
               required
@@ -69,7 +69,7 @@ export default function AdminLogin() {
           </div>
 
           <div>
-            <label className="text-sm font-bold text-stone-800">Password</label>
+            <label className="text-sm font-bold text-[var(--color-text)]">Password</label>
             <input
               type="password"
               required
@@ -82,7 +82,7 @@ export default function AdminLogin() {
           </div>
 
           {error && (
-            <p className="rounded-md bg-red-50 px-3 py-2 text-xs font-semibold text-red-600">
+            <p className="animate-shake rounded-md bg-[var(--color-error-muted)] px-3 py-2 text-xs font-semibold text-[var(--color-error)]">
               {error}
             </p>
           )}
@@ -92,11 +92,11 @@ export default function AdminLogin() {
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-stone-500">
+        <p className="mt-6 text-center text-sm text-[var(--color-text-muted)]">
           {isRegister ? "Already have an account?" : "No account yet?"}{" "}
           <button
             onClick={() => { setIsRegister(!isRegister); setError(""); }}
-            className="font-bold text-[#B88E2F] hover:underline"
+            className="font-bold text-[var(--color-primary)] hover:underline"
           >
             {isRegister ? "Sign In" : "Register"}
           </button>

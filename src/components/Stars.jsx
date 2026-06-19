@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { Star } from "lucide-react";
 
 /**
  * Stars - Composant de notation par étoiles.
@@ -38,11 +37,11 @@ export default function Stars({ rating = 0, interactive = false, onChange = () =
           className={`text-xl transition-colors duration-200 ${
             interactive ? "cursor-pointer" : "cursor-default pointer-events-none"
           } ${
-            star <= displayRating ? "text-amber-500" : "text-stone-300"
+            star <= displayRating ? "text-[var(--color-warning)]" : "text-[var(--color-text-subtle)]"
           }`}
           aria-label={interactive ? `Rate ${star} out of 5` : undefined}
         >
-          <FontAwesomeIcon icon={faStar} />
+          <Star size={20} />
         </button>
       ))}
     </div>

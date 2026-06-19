@@ -12,7 +12,7 @@ function GridSection({ house1, house2, house3, house4, house5, house6, house7 })
   return (
     <div className="grid auto-rows-[140px] grid-cols-2 gap-2 sm:auto-rows-[170px] sm:gap-3 md:grid-cols-4 md:auto-rows-[190px]">
       {images.map((image) => (
-        <div key={image.alt} className={`overflow-hidden rounded-lg bg-stone-100 ${image.className}`}>
+        <div key={image.alt} className={`overflow-hidden rounded-lg bg-[var(--color-surface-2)] ${image.className}`}>
           <img
             src={image.src}
             alt={image.alt}
