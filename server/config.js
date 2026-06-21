@@ -9,6 +9,7 @@ export const config = {
   port: Number(process.env.PORT) || 3001,
   mongoUri: process.env.MONGO_URI || "mongodb://localhost:27017/furino",
   frontendUrl: process.env.FRONTEND_URL || "http://localhost:5173",
+  backendUrl: process.env.BACKEND_URL || "http://localhost",
   allowedOrigins: parseOrigins(process.env.FRONTEND_URL),
   jwtSecret: process.env.JWT_SECRET || "furniro-dev-secret",
   chargily: {
