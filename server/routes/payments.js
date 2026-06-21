@@ -10,7 +10,7 @@ const chargily = new ChargilyClient({
   mode: config.chargily.mode,
 });
 
-const serverOrigin = `http://localhost:${config.port}`;
+const serverOrigin = `${config.backendUrl}:${config.port}`;
 
 router.post("/create-checkout", async (req, res, next) => {
   try {
