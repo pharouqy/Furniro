@@ -88,6 +88,7 @@ export default function Checkout() {
           color: i.color,
         })),
         ...formData,
+        payment_method: selectedMethod,
       });
 
       if (selectedMethod === "card") {

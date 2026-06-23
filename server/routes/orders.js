@@ -9,6 +9,7 @@ router.post("/", async (req, res, next) => {
     const {
       items, firstName, lastName, email, phone,
       address, city, state, zip, country, message,
+      payment_method,
     } = req.body;
 
     if (!items?.length) {
@@ -42,6 +43,7 @@ router.post("/", async (req, res, next) => {
       country,
       total_amount: totalAmount,
       status: "pending",
+      payment_method: payment_method || "",
       items: orderItems,
     });
 

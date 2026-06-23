@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
@@ -27,21 +27,16 @@ import ProductCard from "@/common/components/molecules/ProductCard";
 import Slider from "@/common/components/atoms/Slider";
 import GridSection from "@/common/components/atoms/GridSection";
 import useInView from "@/common/hooks/useInView";
+import { api } from "@/common/utils/api";
 
 export default function Home() {
-  const products = useMemo(
-    () => [
-      { id: 1, title: "Syltherine", description: "Stylish cafe chair", price: 3600000, discount: "30%", image: couch },
-      { id: 2, title: "Leviosa", description: "Minimalist cafe chair", price: 1250000, discount: "", image: couch },
-      { id: 3, title: "Lolito", description: "Luxury big sofa", price: 14000000, discount: "50%", image: couch },
-      { id: 4, title: "Respira", description: "Outdoor bar table and stool", price: 500000, discount: "", image: couch },
-      { id: 5, title: "Grifo", description: "Night lamp", price: 1500000, discount: "", image: couch },
-      { id: 6, title: "Muggo", description: "Small hanger", price: 150000, discount: "10%", image: couch },
-      { id: 7, title: "Pingky", description: "Soft bedroom set", price: 7000000, discount: "20%", image: couch },
-      { id: 8, title: "Potty", description: "Minimalist flower pot", price: 500000, discount: "", image: couch },
-    ],
-    []
-  );
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    api.getProducts()
+      .then((data) => setProducts((data.products || []).slice(0, 8)))
+      .catch(() => {});
+  }, []);
 
   const [roomsRef, roomsInView] = useInView();
   const [productsRef, productsInView] = useInView();
@@ -49,7 +44,6 @@ export default function Home() {
 
   return (
     <main className="w-full bg-[var(--color-bg)] flex flex-col justify-center items-center">
-      {/* Hero Section */}
       <section
         className="w-full relative flex min-h-[600px] items-center overflow-hidden bg-cover bg-center md:min-h-[720px] lg:min-h-[800px]"
         style={{ backgroundImage: `url(${livingRoomHero})` }}
@@ -78,7 +72,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Rooms Section */}
       <section id="rooms" ref={roomsRef} className={`container-page py-20 md:py-28 ${roomsInView ? "animate-reveal" : "opacity-0"}`}>
         <div className="mb-12 text-center">
           <p className="eyebrow">Rooms</p>
@@ -94,7 +87,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Selected Pieces / Products Section */}
       <section ref={productsRef} className={`bg-[var(--color-surface-1)] section border-y border-[var(--color-border)] ${productsInView ? "animate-reveal" : "opacity-0"}`}>
         <div className="container-page">
           <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
@@ -108,23 +100,28 @@ export default function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-4 lg:gap-10">
-            {products.map((product, i) => (
-              <div key={product.id} className={productsInView ? `animate-reveal animate-reveal-delay-${Math.min(i + 1, 5)}` : "opacity-0"}>
-                <ProductCard
-                  id={product.id}
-                  title={product.title}
-                  description={product.description}
-                  price={`${product.price} Da`}
-                  discount={product.discount}
-                  image={product.image}
-                />
-              </div>
-            ))}
+            {products.length === 0 ? (
+              Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="h-72 animate-pulse rounded-2xl bg-[var(--color-surface-2)]" />
+              ))
+            ) : (
+              products.map((product, i) => (
+                <div key={product._id} className={productsInView ? `animate-reveal animate-reveal-delay-${Math.min(i + 1, 5)}` : "opacity-0"}>
+                  <ProductCard
+                    id={product._id}
+                    title={product.title}
+                    description={product.description}
+                    price={`${product.price} Da`}
+                    discount={product.discount}
+                    image={product.image}
+                  />
+                </div>
+              ))
+            )}
           </div>
         </div>
       </section>
 
-      {/* Inspiration Section */}
       <section ref={inspirationRef} className={`bg-[var(--color-surface-sunken)] section ${inspirationInView ? "animate-reveal" : "opacity-0"}`}>
         <div className="container-page grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
           <div className="flex flex-col items-start">
@@ -156,20 +153,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Share setup Section */}
       <section className="container-page section text-center">
         <p className="eyebrow">Share your setup</p>
         <h2 className="section-heading mt-3">#FurniroFurniture</h2>
         <div className="mt-12 overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-1)] p-4 shadow-[var(--shadow-sm)]">
-          <GridSection
-            house1={house1}
-            house2={house2}
-            house3={house3}
-            house4={house4}
-            house5={house5}
-            house6={house6}
-            house7={house7}
-          />
+          <GridSection house1={house1} house2={house2} house3={house3} house4={house4} house5={house5} house6={house6} house7={house7} />
         </div>
       </section>
     </main>
